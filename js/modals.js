@@ -7,3 +7,6 @@ function showReg() {
 function showArticle() {
     document.getElementById('id03').style.display='block';
 }
+function showImport() {
+    document.getElementById('id04').style.display='block';
+}

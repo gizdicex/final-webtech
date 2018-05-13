@@ -29,7 +29,7 @@ if(isset($_GET['login']) && isset($_GET['key'])) {
             $sql = "INSERT INTO USER (login,password,name,surname,type) VALUES ('$login','$pass','$name','$sname','basic')";
             if ($conn->query($sql)) {
                 // Do something
-                $sql = "DELETE FROM CONFIRM WHERE id = '$id'";
+                $sql = "DELETE FROM CONFIRM WHERE login = '$login'";
                 if ($conn->query($sql)) header("Location: index.php");;
             } else {
                 echo "chyba1 ";

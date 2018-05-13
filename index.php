@@ -16,6 +16,7 @@ session_start();
 
 <head>
     <meta charset="utf-8">
+    <link rel="icon" href="img/icon.png" sizes="16x16" type="image/png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -73,7 +74,10 @@ session_start();
                 <li><a href="#">Mapa</a></li>
                 <?php
                     if(isset($_SESSION['logged'])) {
-                        echo "<li><a href='#'>Profil</a></li>";
+                        echo "<li><a href='#'>Tréning</a></li>";
+                        if($_SESSION['type'] == "admin") {
+                            echo "<li><a href='users.php'>Užívateľia</a></li>";
+                        }
                         echo "<li><a href='logout.php'>Odhlásiť</a></li>";
                     }
                 ?>

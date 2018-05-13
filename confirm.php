@@ -30,7 +30,7 @@ if(isset($_GET['login']) && isset($_GET['key'])) {
             if ($conn->query($sql)) {
                 // Do something
                 $sql = "DELETE FROM CONFIRM WHERE id = '$id'";
-                if ($conn->query($sql)) echo "SUCCESFULL!";
+                if ($conn->query($sql)) header("Location: index.php");;
             } else {
                 echo "chyba1 ";
                 //Chybove hlasenie

@@ -6,6 +6,8 @@
  * Time: 16:38
  */
 
+require_once "config.php";
+
 session_start();
 ?>
 
@@ -18,7 +20,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>HTML Template</title>
+    <title>Názov</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -124,7 +126,7 @@ session_start();
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj login" name="login" required>
                 <label><b>Heslo</b></label>
                 <input class="w3-input w3-border" type="password" placeholder="Zadaj Heslo" name="pass" required>
-                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Prihlásenie</button>
+                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Prihlásiť</button>
                 <input class="w3-check w3-margin-top" type="checkbox" checked="checked"> Zapamätať si ma
             </div>
         </form>
@@ -163,6 +165,32 @@ session_start();
 </div>
 <!-- /Registration Modal -->
 
+<!-- Add Article Modal -->
+<div id="id03" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+        <div class="w3-center"><br>
+            <h3>Nový článok</h3>
+        </div>
+
+        <form class="w3-container" method="post" action="newArticle.php">
+            <div class="w3-section">
+                <label><b>Nadpis</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Nadpis" name="heading" required>
+                <label><b>Text</b></label>
+                <textarea name="text" rows="30" cols="100" placeholder="Zadaj Text" required></textarea>
+                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Pridaj</button>
+            </div>
+        </form>
+
+        <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+            <button onclick="document.getElementById('id03').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
+        </div>
+
+    </div>
+</div>
+<!-- /Add Article Modal -->
+
 <!-- About -->
 <div id="about" class="section md-padding">
 
@@ -178,41 +206,24 @@ session_start();
             </div>
             <!-- /Section header -->
             <div class="about">
-                <div class="article">
-                    <h3>Článok</h3>
-                    <p>
-                        Where does it come from?
-                        Contrary to popular belief, Lorem Ipsum is not simply random text.
-                        It has roots in a piece of classical Latin literature from
-                        45 BC, making it over 2000 years old. Richard McClintock, a Latin professor
-                        at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin
-                        words, consectetur, from a Lorem Ipsum passage, and going through the cites
-                        of the word in classical literature, discovered the undoubtable source.
-                        Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
-                        (The Extremes of Good and Evil) by Cicero, written in 45 BC.
-                        This book is a treatise on the theory of ethics, very popular during the Renaissance.
-                        The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a
-                        line in section 1.10.32.
-                    </p>
-                </div>
 
-                <div class="article">
-                    <h3>Článok 2</h3>
-                    <p>
-                        Where does it come from?
-                        Contrary to popular belief, Lorem Ipsum is not simply random text.
-                        It has roots in a piece of classical Latin literature from
-                        45 BC, making it over 2000 years old. Richard McClintock, a Latin professor
-                        at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin
-                        words, consectetur, from a Lorem Ipsum passage, and going through the cites
-                        of the word in classical literature, discovered the undoubtable source.
-                        Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
-                        (The Extremes of Good and Evil) by Cicero, written in 45 BC.
-                        This book is a treatise on the theory of ethics, very popular during the Renaissance.
-                        The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a
-                        line in section 1.10.32.
-                    </p>
-                </div>
+                <?php
+                    if(isset($_SESSION['type'])) {
+                        if($_SESSION['type'] == "admin") {
+                            echo "<button class='btn btn-primary' onclick='showArticle()'>Pridať článok</button>";
+                        }
+                    }
+
+                    $sql = "SELECT * FROM ARTICLE";
+                    $result = $conn->query($sql);
+                    $articles = "";
+                    while($row = $result->fetch_assoc()) {
+                        $article = "<div class='article'><h3>".$row['heading']."</h3><p>".$row['text']."</p></div>";
+                        $articles = $article.$articles;
+                    }
+                    echo $articles;
+                ?>
+
             </div>
         </div>
         <!-- /Row -->

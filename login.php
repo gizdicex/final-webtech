@@ -14,18 +14,20 @@ if(isset($_POST['login'])){
     $login = htmlspecialchars($_POST['login']);
     $pass = hash('sha256', htmlspecialchars($_POST['pass']));
 
-    $sql = "SELECT id FROM USER WHERE login = '$login' AND password = '$pass'";
+    $sql = "SELECT id,type FROM USER WHERE login = '$login' AND password = '$pass'";
     $result = $conn->query($sql);
     if ($result->num_rows == 1) {
 
         $row = $result->fetch_assoc();
         $id = $row['id'];
+        $type = $row['type'];
 /*
         $sql = "INSERT INTO LOGIN (id_user,time,type) VALUES ('$id_u',NOW(),'$type')";
         $conn->query($sql);
 */
         //Pridel sessionID
         $_SESSION['id'] = $id;
+        $_SESSION['type'] = $type;
         $_SESSION['logged'] = true;
         //unset($_SESSION['error']);
         var_dump($_SESSION);

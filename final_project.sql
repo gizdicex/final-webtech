@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Hostiteľ: localhost
--- Čas generovania: Po 14.Máj 2018, 01:10
+-- Čas generovania: Po 14.Máj 2018, 01:35
 -- Verzia serveru: 5.7.21-0ubuntu0.16.04.1
 -- Verzia PHP: 7.0.28-0ubuntu0.16.04.1
 
@@ -88,8 +88,9 @@ CREATE TABLE `USER` (
 --
 
 INSERT INTO `USER` (`id`, `login`, `password`, `name`, `surname`, `type`, `school`, `school_addr`, `street`, `psc`, `city`) VALUES
+(1, 'admin', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'Admin', 'Admin', 'admin', NULL, NULL, NULL, NULL, NULL),
 (2, 'filip.konig39@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'Filip', 'Konig', 'basic', NULL, NULL, NULL, NULL, NULL),
-(1, 'admin', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'Admin', 'Admin', 'admin', NULL, NULL, NULL, NULL, NULL);
+(3, 'email1@gmail.com', 'e477570deb7090066c8668ff8e3397bd8295abf8c1c414d31973fe3078f495fc', 'Adam', 'Novak', 'basic', 'Gymnazium Martina Kukucina', '', '', '4918', '');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -108,6 +109,12 @@ ALTER TABLE `CONFIRM`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexy pre tabuľku `USER`
+--
+ALTER TABLE `USER`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT pre exportované tabuľky
 --
 
@@ -121,6 +128,11 @@ ALTER TABLE `ARTICLE`
 --
 ALTER TABLE `CONFIRM`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT pre tabuľku `USER`
+--
+ALTER TABLE `USER`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

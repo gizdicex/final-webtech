@@ -25,7 +25,7 @@ if(isset($_POST['login'])){
         $conn->query($sql);
 */
         //Pridel sessionID
-        $_SESSION['id'] = $id.$login;
+        $_SESSION['id'] = $id;
         $_SESSION['logged'] = true;
         //unset($_SESSION['error']);
         var_dump($_SESSION);

@@ -8,11 +8,16 @@
 
 require_once "config.php";
 
-if(isset($_POST['signup'])) {
+if(isset($_POST['name'])) {
 
     $name = $_POST['name'];
     $sname = $_POST['sname'];
     $mail = $_POST['email'];
+    $school = $_POST['school'];
+    $school_addr = $_POST['school_addr'];
+    $street = $_POST['street'];
+    $psc = $_POST['psc'];
+    $city = $_POST['city'];
     $pass = hash('sha256', $_POST['pass']);
     $key = md5($mail.date("H:i:s"));
 
@@ -23,9 +28,10 @@ if(isset($_POST['signup'])) {
     //Ak neexistuje user s danym emailom
     if($result->num_rows < 1) {
         //Vytvor noveho USERA
-        $sql = "INSERT INTO CONFIRM (login,password,name,surname,user_key) VALUES ('$mail','$pass','$name','$sname','$key')";
+        $sql = "INSERT INTO CONFIRM (login,password,name,surname,user_key,school,school_addr,street,psc,city) VALUES ('$mail','$pass','$name','$sname','$key','$school','$school_addr','$street','$psc','$city')";
         if ($conn->query($sql)) {
             sendMail($mail, $key);
+            echo "Overovací email bol odoslaný";
         }
         else {
             echo "chyba1 ";
@@ -68,27 +74,5 @@ function sendMail($email, $userKey) {
     <link rel="stylesheet" type="text/css" href="./style.css"/>
 </head>
 <body>
-<div class="login-form">
-    <form action="signup.php" method="post">
-        <h2 class="text-center">Sign up</h2>
-        <input type="hidden" name="signup" value="true">
-        <div class="form-group">
-            <input type="text" name="name" class="form-control" placeholder="Name" required="required">
-        </div>
-        <div class="form-group">
-            <input type="text" name="sname" class="form-control" placeholder="Surname" required="required">
-        </div>
-        <div class="form-group">
-            <input type="email" name="email" class="form-control" placeholder="Email" required="required">
-        </div>
-        <div class="form-group">
-            <input type="password" id="pass" name="pass" class="form-control" placeholder="Password" required="required" onchange="checkPass()">
-        </div>
-        <div class="form-group">
-            <button id="regBtn" type="submit" class="btn btn-primary btn-block" >Sign up</button>
-        </div>
-    </form>
-    <p class="text-center"><a href="login.php">Cancel</a></p>
-</div>
 </body>
 </html>

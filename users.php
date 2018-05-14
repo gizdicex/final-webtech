@@ -73,6 +73,7 @@ $result = $conn->query($sql);
                 <li><a href="index.php">Úvod</a></li>
                 <li><a href="index.php#about">Aktuality</a></li>
                 <li><a href="index.php#mapa">Mapa</a></li>
+
                 <?php
                 if(isset($_SESSION['logged'])) {
                     echo "<li><a href='#'>Tréning</a></li>";

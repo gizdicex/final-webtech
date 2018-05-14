@@ -35,7 +35,9 @@ session_start();
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
+
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6lI0h7tl0K0YD97a2vrigjLRSie7rSIA&libraries=places"></script>
+
 
 </head>
 
@@ -73,7 +75,9 @@ session_start();
             <ul class="main-nav nav navbar-nav navbar-right">
                 <li><a href="#home">Úvod</a></li>
                 <li><a href="#about">Aktuality</a></li>
+
                 <li><a href="#mapa">Mapa</a></li>
+
                 <?php
                     if(isset($_SESSION['logged'])) {
                         echo "<li><a href='#'>Tréning</a></li>";
@@ -264,7 +268,6 @@ session_start();
 <!-- /Map -->
 
 
-
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">
 
@@ -317,6 +320,7 @@ session_start();
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
 <script type="text/javascript" src="js/maps.js"></script>
+
 
 </body>
 

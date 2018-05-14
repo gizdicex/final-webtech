@@ -20,13 +20,18 @@ if(isset($_GET['login']) && isset($_GET['key'])) {
         $pass = $row['password'];
         $name = $row['name'];
         $sname = $row['surname'];
+        $school = $row['school'];
+        $school_addr = $row['school_addr'];
+        $street = $row['street'];
+        $psc = $row['psc'];
+        $city = $row['city'];
         $id = $row['id'];
 
         $sql = "SELECT * FROM USER WHERE login = '$login'";
         $result = $conn->query($sql);
 
         if($result->num_rows < 1) {
-            $sql = "INSERT INTO USER (login,password,name,surname,type) VALUES ('$login','$pass','$name','$sname','basic')";
+            $sql = "INSERT INTO USER (login,password,name,surname,type,school,school_addr,street,psc,city) VALUES ('$login','$pass','$name','$sname','basic','$school','$school_addr','$street','$psc','$city')";
             if ($conn->query($sql)) {
                 // Do something
                 $sql = "DELETE FROM CONFIRM WHERE login = '$login'";

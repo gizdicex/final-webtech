@@ -13,6 +13,11 @@ if(isset($_POST['name'])) {
     $name = $_POST['name'];
     $sname = $_POST['sname'];
     $mail = $_POST['email'];
+    $school = $_POST['school'];
+    $school_addr = $_POST['school_addr'];
+    $street = $_POST['street'];
+    $psc = $_POST['psc'];
+    $city = $_POST['city'];
     $pass = hash('sha256', $_POST['pass']);
     $key = md5($mail.date("H:i:s"));
 
@@ -23,7 +28,7 @@ if(isset($_POST['name'])) {
     //Ak neexistuje user s danym emailom
     if($result->num_rows < 1) {
         //Vytvor noveho USERA
-        $sql = "INSERT INTO CONFIRM (login,password,name,surname,user_key) VALUES ('$mail','$pass','$name','$sname','$key')";
+        $sql = "INSERT INTO CONFIRM (login,password,name,surname,user_key,school,school_addr,street,psc,city) VALUES ('$mail','$pass','$name','$sname','$key','$school','$school_addr','$street','$psc','$city')";
         if ($conn->query($sql)) {
             sendMail($mail, $key);
             echo "Overovací email bol odoslaný";

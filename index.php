@@ -35,6 +35,10 @@ session_start();
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6lI0h7tl0K0YD97a2vrigjLRSie7rSIA&libraries=places"></script>
+
+
 </head>
 
 <body>
@@ -71,7 +75,9 @@ session_start();
             <ul class="main-nav nav navbar-nav navbar-right">
                 <li><a href="#home">Úvod</a></li>
                 <li><a href="#about">Aktuality</a></li>
-                <li><a href="#">Mapa</a></li>
+
+                <li><a href="#mapa">Mapa</a></li>
+
                 <?php
                     if(isset($_SESSION['logged'])) {
                         echo "<li><a href='#'>Tréning</a></li>";
@@ -157,6 +163,16 @@ session_start();
                 <input class="w3-input w3-border w3-margin-bottom" type="email" placeholder="Zadaj Email" name="email" required>
                 <label><b>Heslo</b></label>
                 <input class="w3-input w3-border" type="password" placeholder="Zadaj Heslo" name="pass" required>
+                <label><b>Škola</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Školu" name="school" required>
+                <label><b>Adresa školy</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj adresu školy" name="school_addr" required>
+                <label><b>Ulica</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Ulicu" name="street" required>
+                <label><b>PSČ</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj PSČ" name="psc" required>
+                <label><b>Obec</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Obec" name="city" required>
                 <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Registrovať</button>
             </div>
         </form>
@@ -238,6 +254,18 @@ session_start();
 </div>
 <!-- /About -->
 
+<!-- Map -->
+<div id="mapa" class="section">
+
+    <!-- Section header -->
+    <div class="section-header text-center">
+        <h2 class="title">Mapa</h2>
+    </div>
+    <!-- /Section header -->
+    <div id="map"></div>
+
+</div>
+<!-- /Map -->
 
 
 <!-- Footer -->
@@ -253,7 +281,7 @@ session_start();
 
                 <!-- footer logo -->
                 <div class="footer-logo">
-                    <a href="index.html"><img src="img/logo2.png" alt="logo"></a>
+                    <a href="index.php"><img src="img/logo2.png" alt="logo"></a>
                 </div>
                 <!-- /footer logo -->
 
@@ -291,6 +319,8 @@ session_start();
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
+<script type="text/javascript" src="js/maps.js"></script>
+
 
 </body>
 

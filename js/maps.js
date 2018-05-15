@@ -1,5 +1,6 @@
 var baseMap;
 var geocoder;
+var baseMapMarkers = [];
 
 $(function(){
     geocoder = new google.maps.Geocoder();
@@ -12,6 +13,9 @@ $(function(){
 });
 
 function setMap(option) {
+
+    clearMarkers();
+
     $.get( "http://gizdicex.info/final/getAddress.php?option="+option, function(data) {
         console.log("server call succeed");
 
@@ -27,6 +31,7 @@ function setMap(option) {
                         map: baseMap,
                         position: results[0].geometry.location
                     });
+                    baseMapMarkers.push(marker);
                     bounds.extend(marker.position);
                     baseMap.fitBounds(bounds);
                 } else {
@@ -44,5 +49,12 @@ function changeOption() {
     var select = document.getElementById("sel1");
     if(select.selectedIndex == 0) setMap("addr");
     else if(select.selectedIndex == 1) setMap("school_addr");
+}
+
+function clearMarkers() {
+    baseMapMarkers.forEach(function (element) {
+        element.setMap(null);
+    });
+    baseMapMarkers = [];
 }
 

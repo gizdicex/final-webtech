@@ -33,14 +33,14 @@ if($_SESSION['type'] == "admin") {
     while (($data = fgetcsv($handle, 1000, $delimeter)) !== FALSE) {
         if(!$head) {
 
-            $sname = iconv("Windows-1252", "UTF-8", $data[1]);
-            $name = iconv("Windows-1252", "UTF-8", $data[2]);
-            $email = iconv("Windows-1252", "UTF-8", $data[3]);
-            $school = iconv("Windows-1252", "UTF-8", $data[4]);
-            $saddr = iconv("Windows-1252", "UTF-8", $data[5]);
-            $street = iconv("Windows-1252", "UTF-8", $data[6]);
-            $psc = iconv("Windows-1252", "UTF-8", $data[7]);
-            $city = iconv("Windows-1252", "UTF-8", $data[8]);
+            $sname = iconv("Windows-1250", "UTF-8", $data[1]);
+            $name = iconv("Windows-1250", "UTF-8", $data[2]);
+            $email = iconv("Windows-1250", "UTF-8", $data[3]);
+            $school = iconv("Windows-1250", "UTF-8", $data[4]);
+            $saddr = iconv("Windows-1250", "UTF-8", $data[5]);
+            $street = iconv("Windows-1250", "UTF-8", $data[6]);
+            $psc = iconv("Windows-1250", "UTF-8", $data[7]);
+            $city = iconv("Windows-1250", "UTF-8", $data[8]);
             $pass = hash('sha256',bin2hex(random_bytes(6)));
 
             if (!$stmt->execute()) {

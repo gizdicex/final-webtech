@@ -18,14 +18,17 @@ function setMap(option) {
         var data = JSON.parse(data);
         console.log(data);
 
+        var bounds = new google.maps.LatLngBounds();
+
         data.forEach(function (element) {
             geocoder.geocode( { 'address': element}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    baseMap.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
                         map: baseMap,
                         position: results[0].geometry.location
                     });
+                    bounds.extend(marker.position);
+                    baseMap.fitBounds(bounds);
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }

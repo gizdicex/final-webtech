@@ -35,9 +35,7 @@ session_start();
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
-
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6lI0h7tl0K0YD97a2vrigjLRSie7rSIA&libraries=places"></script>
-
 
 </head>
 
@@ -75,9 +73,7 @@ session_start();
             <ul class="main-nav nav navbar-nav navbar-right">
                 <li><a href="#home">Úvod</a></li>
                 <li><a href="#about">Aktuality</a></li>
-
                 <li><a href="#mapa">Mapa</a></li>
-
                 <?php
                     if(isset($_SESSION['logged'])) {
                         echo "<li><a href='#'>Tréning</a></li>";
@@ -262,10 +258,22 @@ session_start();
         <h2 class="title">Mapa</h2>
     </div>
     <!-- /Section header -->
+
+    <form style="width: 50%; margin: auto" class="text-center" >
+        <div class="form-group">
+            <label for="sel1">Zadajte typ údajov pre mapu:</label>
+            <select class="form-control" id="sel1" onchange="changeOption()">
+                <option value="1">Bydlisko užívateľov</option>
+                <option value="2">Školy, ktoré užívateľia navštevujú</option>
+            </select>
+        </div>
+    </form>
+
     <div id="map"></div>
 
 </div>
 <!-- /Map -->
+
 
 
 <!-- Footer -->
@@ -320,7 +328,6 @@ session_start();
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
 <script type="text/javascript" src="js/maps.js"></script>
-
 
 </body>
 

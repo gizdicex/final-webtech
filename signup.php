@@ -42,7 +42,7 @@ if(isset($_POST['name'])) {
 }
 
 function sendMail($email, $userKey) {
-    $link = "http://gizdicex.info/final/confirm.php?login=".$email."&key=".$userKey;
+    $link = "http://147.175.98.179/cviko2/Final/final-webtech/confirm.php?login=".$email."&key=".$userKey;
     $headers = "From: Final Project <project@example.com>\r\n";
     $headers .= "Reply-To: project@example.com\r\n";
     $headers .= "Content-Type: text/html;\r\n";

@@ -12,6 +12,7 @@ session_start();
 if($_SESSION['type'] == "admin") {
 
     $delimeter = $_POST['delimeter'];
+    $encoding = $_POST['encoding'];
 
     if (!($stmt = $conn->prepare("INSERT INTO USER (surname, name, login, school, school_addr, street, psc, city, password, type) VALUES (?,?,?,?,?,?,?,?,?,'basic')"))) {
         echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
@@ -33,14 +34,14 @@ if($_SESSION['type'] == "admin") {
     while (($data = fgetcsv($handle, 1000, $delimeter)) !== FALSE) {
         if(!$head) {
 
-            $sname = iconv("Windows-1250", "UTF-8", $data[1]);
-            $name = iconv("Windows-1250", "UTF-8", $data[2]);
-            $email = iconv("Windows-1250", "UTF-8", $data[3]);
-            $school = iconv("Windows-1250", "UTF-8", $data[4]);
-            $saddr = iconv("Windows-1250", "UTF-8", $data[5]);
-            $street = iconv("Windows-1250", "UTF-8", $data[6]);
-            $psc = iconv("Windows-1250", "UTF-8", $data[7]);
-            $city = iconv("Windows-1250", "UTF-8", $data[8]);
+            $sname = iconv($encoding, "UTF-8", $data[1]);
+            $name = iconv($encoding, "UTF-8", $data[2]);
+            $email = iconv($encoding, "UTF-8", $data[3]);
+            $school = iconv($encoding, "UTF-8", $data[4]);
+            $saddr = iconv($encoding, "UTF-8", $data[5]);
+            $street = iconv($encoding, "UTF-8", $data[6]);
+            $psc = iconv($encoding, "UTF-8", $data[7]);
+            $city = iconv($encoding, "UTF-8", $data[8]);
             $pass = hash('sha256',bin2hex(random_bytes(6)));
 
             if (!$stmt->execute()) {

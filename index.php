@@ -102,8 +102,8 @@ session_start();
                         <p class="white-text">Popis</p>
                         <?php
                             if(!isset($_SESSION['logged'])) {
-                                echo "<button class='white-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Prihlásenie</button>";
-                                echo "<button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Registrácia</button>";
+                                echo "<button class='white-btn' onclick='showLogin()' >Prihlásenie</button>";
+                                echo "<button class='main-btn' onclick='showReg()' >Registrácia</button>";
                             }
                         ?>
                     </div>

@@ -33,6 +33,7 @@ function setMap(option) {
 
                 if (status == google.maps.GeocoderStatus.OK) {
                     var marker = new google.maps.Marker({
+                        title: element,
                         map: baseMap,
                         position: results[0].geometry.location
                     });

@@ -16,7 +16,7 @@ function setMap(option) {
 
     clearMarkers();
 
-    $.get( "http://gizdicex.info/final/getAddress.php?option="+option, function(data) {
+    $.get( "http://147.175.98.179/cviko2/Final/final-webtech/getAddress.php?option="+option, function(data) {
         console.log("server call succeed");
 
         var data = JSON.parse(data);
@@ -25,7 +25,12 @@ function setMap(option) {
         var bounds = new google.maps.LatLngBounds();
 
         data.forEach(function (element) {
-            geocoder.geocode( { 'address': element}, function(results, status) {
+
+            var url_addr = encodeURIComponent(element);
+            $.getJSON('geocode.php?addr='+url_addr, function(data) {
+                var results = data.results,
+                    status = data.status;
+
                 if (status == google.maps.GeocoderStatus.OK) {
                     var marker = new google.maps.Marker({
                         map: baseMap,
@@ -34,7 +39,8 @@ function setMap(option) {
                     baseMapMarkers.push(marker);
                     bounds.extend(marker.position);
                     baseMap.fitBounds(bounds);
-                } else {
+                }
+                else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });

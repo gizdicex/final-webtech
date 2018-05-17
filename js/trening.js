@@ -1,4 +1,4 @@
-function initmap() {
+function initMap() {
 
     var directionsservice = new google.maps.directionsservice;
 

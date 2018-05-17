@@ -27,8 +27,8 @@ directionsService.route({
         vzdialenostInput.value = vzdialenost;
         vzdialenostInput.setAttribute("name","vzdialenost");
         vzdialenostInput.setAttribute("hidden","true");
-        console.log(vzdialenostInput);
         theForm.appendChild(vzdialenostInput);
+
 
         theForm.submit();
 

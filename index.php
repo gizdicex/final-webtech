@@ -99,7 +99,7 @@ session_start();
                 <div class="col-md-10 col-md-offset-1">
                     <div class="home-content">
                         <h1 class="white-text">Vitajte na našej stránke</h1>
-                        <p class="white-text">Popis</p>
+                        <p class="white-text"> <i>„Je škoda, ak človek zostárne, bez toho aby videl krásu a silu, ktorej je jeho telo schopné.“<br>Socrates</i></p>
                         <?php
                             if(!isset($_SESSION['logged'])) {
                                 echo "<button class='white-btn' onclick='showLogin()' >Prihlásenie</button>";

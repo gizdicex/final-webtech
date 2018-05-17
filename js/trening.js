@@ -1,44 +1,47 @@
 function initMap() {
 
-    var directionsservice = new google.maps.directionsservice;
+var directionsService = new google.maps.DirectionsService;
 
-    var inputstart = document.getelementbyid('start-input');
-    var searchboxstart = new google.maps.places.searchbox(inputstart);
+var inputStart = document.getElementById('start-input');
+var searchBoxStart = new google.maps.places.SearchBox(inputStart);
 
-    var inputend = document.getelementbyid('end-input');
-    var searchboxend = new google.maps.places.searchbox(inputend);
-
-
-    document.getelementbyid('submitbutton').addeventlistener('click', function () {
-        var vzdialenost = 0;
-
-        directionsservice.route({
-            origin: inputstart.value,
-            destination: inputend.value,
-            travelmode: 'walking'
-        }, function (response, status) {
-            if (status === 'ok') {
-                vzdialenost = response.routes[0].legs[0].distance.value;
-                console.log(vzdialenost);
-                var theform = document.getelementbyid('formular');
-
-                var vzdialenostinput = document.createelement('input');
-                vzdialenostinput.value = vzdialenost;
-                vzdialenostinput.setattribute("name", "vzdialenost");
-                console.log(vzdialenostinput);
-                theform.appendchild(vzdialenostinput);
-
-                theform.submit();
-
-            } else {
-                window.alert('directions request failed due to ' + status);
-            }
+var inputEnd = document.getElementById('end-input');
+var searchBoxEnd = new google.maps.places.SearchBox(inputEnd);
 
 
-        });
+
+document.getElementById('submitButton').addEventListener('click', function() {
+var vzdialenost = 0;
+
+directionsService.route({
+    origin: inputStart.value,
+    destination: inputEnd.value,
+    travelMode: 'WALKING'
+},function(response, status) {
+    if (status === 'OK') {
+        vzdialenost = response.routes[0].legs[0].distance.value;
+        console.log(vzdialenost);
+        var theForm = document.getElementById('formular');
+
+        var vzdialenostInput = document.createElement('input');
+        vzdialenostInput.value = vzdialenost;
+        vzdialenostInput.setAttribute("name","vzdialenost");
+        vzdialenostInput.setAttribute("hidden","true");
+        console.log(vzdialenostInput);
+        theForm.appendChild(vzdialenostInput);
+
+        theForm.submit();
+
+    }else {
+        window.alert('Directions request failed due to ' + status);
+    }
 
 
-    });
+});
+
+
+
+});
 
 }
 

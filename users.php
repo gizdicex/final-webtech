@@ -71,6 +71,7 @@ $result = $conn->query($sql);
                 <?php
                 if(isset($_SESSION['logged'])) {
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";
+                    echo "<li><a href='performance.php'>Osobný výkon</a>";
                     if($_SESSION['type'] == "admin") {
                         echo "<li class='active'><a href='users.php'>Užívateľia</a></li>";
                     }

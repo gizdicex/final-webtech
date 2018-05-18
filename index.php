@@ -74,8 +74,7 @@ session_start();
                 <li><a href="#mapa">Mapa</a></li>
                 <?php
 
-                if(isset($_SESSION['logged'])) {
-                    echo "<li><a href='trening.php'>Tréning</a></li>";
+                if(isset($_SESSION['logged'])) {    
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";
                     if($_SESSION['type'] == "admin") {
                         echo "<li><a href='users.php'>Užívateľia</a></li>";

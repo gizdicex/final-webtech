@@ -24,6 +24,31 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
         echo("Error description: " . mysqli_error($con));
     }else echo "Trasa bola úspešne pridaná";
 
+}
+
+if(isset($_POST['km']) ) {
+    $km = $_POST['km'];
+    $den = $_POST['den'];
+    $zaciatok = $_POST['zaciatok'];
+    $koniec = $_POST['koniec'];
+    $gps_zaciatok = $_POST['gps_zaciatok'];
+    $gps_koniec = $_POST['gps_koniec'];
+    $hodnotenie = $_POST['hodnotenie'];
+    $poznamka = $_POST['poznamka'];
+
+    if (empty($den)) $den = "NULL"; else $den = "'$den'";
+    if (empty($zaciatok)) $zaciatok = "NULL"; else $zaciatok = "'$zaciatok'";
+    if (empty($koniec)) $koniec = "NULL"; else $koniec = "'$koniec'";
+    if (empty($gps_zaciatok)) $gps_zaciatok = "NULL"; else $gps_zaciatok = "'$gps_zaciatok'";
+    if (empty($gps_koniec)) $gps_koniec = "NULL"; else $gps_koniec = "'$gps_koniec'";
+    if (empty($hodnotenie)) $hodnotenie = "NULL"; else $hodnotenie = "'$hodnotenie'";
+    if (empty($poznamka)) $poznamka = "NULL"; else $poznamka = "'$poznamka'";
+
+    $id = $_SESSION['id'];
+    if (!mysqli_query($conn, "INSERT INTO POKROKY (km,den,zcas,kcas,zgps,kgps,hodnotenie,poznamka,USER_ID) VALUES ('$km',$den,$zaciatok,$koniec,$gps_zaciatok,$gps_koniec,$hodnotenie,$poznamka,'$id')")) {
+        echo("Error description: " . mysqli_error($con));
+    } else
+        echo "Pokrok bol úspešne pridaný";
 
 }
 
@@ -120,7 +145,7 @@ if(isset($_POST['km']) ) {
 
                 <?php
                 if(isset($_SESSION['logged'])) {
-                    echo "<li><a href='trening.php'>Tréning</a></li>";
+                    echo "<li class='active'><a href='trening.php'>Tréning</a></li>";
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";
 
                     if($_SESSION['type'] == "admin") {
@@ -236,90 +261,6 @@ if(isset($_POST['km']) ) {
     </div>
 </div>
 <!-- /Udaje Modal -->
-
-<!-- Add Article Modal -->
-<div id="id03" class="w3-modal">
-    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-
-        <div class="w3-center"><br>
-            <h3>Nový článok</h3>
-        </div>
-
-        <form class="w3-container" method="post" action="newArticle.php">
-            <div class="w3-section">
-                <label><b>Nadpis</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Nadpis" name="heading" required>
-                <label><b>Text</b></label>
-                <textarea name="text" rows="30" cols="100" placeholder="Zadaj Text" required></textarea>
-                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Pridaj</button>
-            </div>
-        </form>
-
-        <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-            <button onclick="document.getElementById('id03').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
-        </div>
-
-    </div>
-</div>
-<!-- /Add Article Modal -->
-
-<!-- About -->
-<div id="about" class="section md-padding">
-
-    <!-- Container -->
-    <div class="container">
-
-        <!-- Row -->
-        <div class="row">
-
-            <!-- Section header -->
-            <div class="section-header text-center">
-                <h2 class="title">Aktuality</h2>
-            </div>
-            <!-- /Section header -->
-            <div class="about">
-
-                <?php
-                if(isset($_SESSION['type'])) {
-                    if($_SESSION['type'] == "admin") {
-                        echo "<button class='btn btn-primary' onclick='showArticle()'>Pridať článok</button>";
-                    }
-                }
-
-                $sql = "SELECT * FROM ARTICLE";
-                $result = $conn->query($sql);
-                $articles = "";
-                while($row = $result->fetch_assoc()) {
-                    $article = "<div class='article'><h3>".$row['heading']."</h3><p>".$row['text']."</p></div>";
-                    $articles = $article.$articles;
-                }
-                echo $articles;
-                ?>
-
-            </div>
-        </div>
-        <!-- /Row -->
-
-    </div>
-    <!-- /Container -->
-
-</div>
-<!-- /About -->
-
-<!-- Map -->
-<div id="mapa" class="section">
-
-    <!-- Section header -->
-    <div class="section-header text-center">
-        <h2 class="title">Mapa</h2>
-    </div>
-
-
-    <div id="map"></div>
-
-</div>
-<!-- /Map -->
-
 
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">

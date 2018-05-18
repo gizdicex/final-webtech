@@ -124,44 +124,11 @@ $result = $conn->query($sql);
             <th onclick="sortTable(1)"><b>Vzdialenost</b></th>
             <th onclick="sortTable(2)"><b>Mód</b></th>
 
-        <?php
-        if($_SESSION['type'] == "admin") {
-            ?><th onclick="sortTable(2)"><b>Uzivatel</b></th>
+            <?php if($_SESSION['type'] == "admin")  echo "<th onclick='sortTable(2)'><b>Uživateľ</b></th>"; ?>
         </tr>
         </thead>
-        <tbody>
-            <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-        ?>
-            <tr>
-                <td><?php echo $row['aktivnost'] ?></td>
-                <td><?php echo $row['Vzdialenost'] ?></td>
-                <td><?php echo $row['Mode'] ?></td>
-                <td><?php echo $row['login'] ?></td>
-            </tr> </tbody>
-        <?php
-                }
-            }
-        }
-        else if(($_SESSION['logged'])){
-            ?>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <tr>
-                        <td><?php echo $row['aktivnost'] ?></td>
-                        <td><?php echo $row['Vzdialenost'] ?></td>
-                        <td><?php echo $row['Mode'] ?></td>
-                    </tr> </tbody>
-               <?php }
-            }
-        }
-        ?>
+        <tbody id="tab-data">
+        </tbody>
 
     </table>
     </div>
@@ -222,6 +189,8 @@ $result = $conn->query($sql);
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/tableSort.js"></script>
 <script type="text/javascript" src="js/toPDF.js"></script>
+<script type="text/javascript" src="js/fillTable.js"></script>
+
 
 </body>
 </html>

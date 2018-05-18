@@ -9,7 +9,9 @@ require_once "config.php";
 if(isset($_GET['option'])) {
     if($_GET['option'] == 'addr') {
         $result_array = array();
-        $sql = "SELECT street,psc,city FROM USER WHERE type = 'basic'";
+
+        $sql = "SELECT street,psc,city FROM USER WHERE type = 'basic' LIMIT 3";
+
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             $full_address = $row['city'].", ".$row['street'].", ".$row['psc'];
@@ -19,7 +21,9 @@ if(isset($_GET['option'])) {
     }
     else if($_GET['option'] == 'school_addr') {
         $result_array = array();
-        $sql = "SELECT school_addr FROM USER WHERE type = 'basic'";
+
+        $sql = "SELECT school_addr FROM USER WHERE type = 'basic' LIMIT 3";
+
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             array_push($result_array, $row['school_addr']);

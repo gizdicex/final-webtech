@@ -10,6 +10,6 @@ while ($status=="OVER_QUERY_LIMIT") {
     $json = file_get_contents($url);
     $status = json_decode($json)->status;
 }
-
 header('application/json');
 echo $json;
+

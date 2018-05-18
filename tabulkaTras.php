@@ -1,17 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Taiwin
- * Date: 13.05.2018
- * Time: 22:13
- */
+
 require_once "config.php";
 session_start();
+/*
 if(!isset($_SESSION['logged']) || $_SESSION['type'] != "admin"){
     header("Location: index.php");
-}
-$sql = "SELECT * FROM USER";
+}*/
+
+$sql = "SELECT * FROM TRASA t LEFT JOIN USER u ON t.id_user=u.id LEFT JOIN USER_PATH up ON t.id=up.id_trasa";
 $result = $conn->query($sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -68,12 +66,13 @@ $result = $conn->query($sql);
                 <li><a href="index.php">Úvod</a></li>
                 <li><a href="index.php#about">Aktuality</a></li>
                 <li><a href="index.php#mapa">Mapa</a></li>
+
                 <?php
                 if(isset($_SESSION['logged'])) {
                     echo "<li><a href='trening.php'>Tréning</a></li>";
-                    echo "<li><a href='tabulkaTras.php'>Trasy</a>";
+                    echo "<li class='active'><a href='tabulkaTras.php'>Trasy</a>";
                     if($_SESSION['type'] == "admin") {
-                        echo "<li class='active'><a href='users.php'>Užívateľia</a></li>";
+                        echo "<li><a href='users.php'>Užívateľia</a></li>";
                     }
                     echo "<li><a href='logout.php'>Odhlásiť</a></li>";
                 }
@@ -99,15 +98,8 @@ $result = $conn->query($sql);
                 <input type="hidden" name="MAX_FILE_SIZE" value="30000">
                 <label><b>CSV súbor</b></label>
                 <input class="w3-input w3-border" type="file" id="csv" name="csv" required>
-                <label><b>Oddeľovač</b></label>
+                <label><b>Delimeter</b></label>
                 <input class="w3-input w3-border" type="text" name="delimeter" maxlength="1">
-                <div class="form-group">
-                    <label for="encoding">Kódovanie</label>
-                    <select name="encoding" class="form-control" id="encoding" >
-                        <option value="Windows-1250">Windows-1250</option>
-                        <option value="UTF-8">UTF-8</option>
-                    </select>
-                </div>
                 <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Importovať</button>
             </div>
         </form>
@@ -122,31 +114,22 @@ $result = $conn->query($sql);
 
 <!-- Table -->
 <div class="container">
-    <button id="import-btn" class="btn btn-default" onclick="showImport()">Import CSV</button>
-    <table class="table table-striped">
+    <button onclick="javascript:demoFromHTML()">PDF</button>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Vyhľadaj užívateľa..." title="Type in a name">
+    <div id="content">
+    <table class="table table-striped" id="myTable">
         <thead>
         <tr>
-            <td><b>Meno</b></td>
-            <td><b>Priezvisko</b></td>
-            <td><b>Email</b></td>
+            <th onclick="sortTable(0)"><b>Aktivnost</b></th>
+            <th onclick="sortTable(1)"><b>Vzdialenost</b></th>
+            <th onclick="sortTable(2)"><b>Mód</b></th>
+            <?php if($_SESSION['type'] == "admin")  echo "<th onclick='sortTable(2)'><b>Uživateľ</b></th>"; ?>
         </tr>
         </thead>
-        <tbody>
-        <?php
-        if($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                ?>
-                <tr>
-                    <td><?php echo $row['name'] ?></td>
-                    <td><?php echo $row['surname'] ?></td>
-                    <td><?php echo $row['login'] ?></td>
-                </tr>
-                <?php
-            }
-        }
-        ?>
+        <tbody id="tab-data">
         </tbody>
     </table>
+    </div>
 </div>
 
 <!-- Footer -->
@@ -200,6 +183,12 @@ $result = $conn->query($sql);
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/tableSort.js"></script>
+<script type="text/javascript" src="js/toPDF.js"></script>
+<script type="text/javascript" src="js/fillTable.js"></script>
 
 </body>
 </html>
+

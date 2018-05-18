@@ -16,7 +16,7 @@ function setMap(option) {
 
     clearMarkers();
 
-    $.get( "http://gizdicex.info/final/getAddress.php?option="+option, function(data) {
+    $.get( "getAddress.php?option="+option, function(data) {
         console.log("server call succeed");
 
         var data = JSON.parse(data);
@@ -32,6 +32,7 @@ function setMap(option) {
                     status = data.status;
 
                 if (status == google.maps.GeocoderStatus.OK) {
+                    console.log("OK");
                     var marker = new google.maps.Marker({
                         title: element,
                         map: baseMap,
@@ -64,4 +65,3 @@ function clearMarkers() {
     });
     baseMapMarkers = [];
 }
-

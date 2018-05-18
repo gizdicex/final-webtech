@@ -5,11 +5,8 @@
  * Date: 08.05.2018
  * Time: 16:33
  */
-
 require_once "config.php";
-
 if(isset($_POST['name'])) {
-
     $name = $_POST['name'];
     $sname = $_POST['sname'];
     $mail = $_POST['email'];
@@ -20,11 +17,8 @@ if(isset($_POST['name'])) {
     $city = $_POST['city'];
     $pass = hash('sha256', $_POST['pass']);
     $key = md5($mail.date("H:i:s"));
-
-
     $sql = "SELECT id FROM USER WHERE login = '$mail'";
     $result = $conn->query($sql);
-
     //Ak neexistuje user s danym emailom
     if($result->num_rows < 1) {
         //Vytvor noveho USERA
@@ -39,15 +33,12 @@ if(isset($_POST['name'])) {
             //Chybove hlasnie
         }
     }
-
     else {
         //Na tento mail uz existuje account
         $msg = "Zadaný email sa v databáze už nachádza";
         $submsg = "Pre návrat na hlavnú stránku stlačte tlačidlo nižšie";
     }
-
 }
-
 function sendMail($email, $userKey) {
     $link = "http://gizdicex.info/final/confirm.php?login=".$email."&key=".$userKey;
     $headers = "From: Final Project <project@example.com>\r\n";
@@ -56,7 +47,6 @@ function sendMail($email, $userKey) {
     $body = '<a href="'.$link.'">Confirm your email</a>';
     if(!mail($email, "Confirmation mail", $body, $headers)) echo "mailerror";
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -137,4 +127,3 @@ function sendMail($email, $userKey) {
 </body>
 
 </html>
-

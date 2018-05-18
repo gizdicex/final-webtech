@@ -7,7 +7,7 @@
  */
 require_once "config.php";
 session_start();
-if(!isset($_SESSION['logged']) || $_SESSION['type'] != "admin"){
+if(!isset($_SESSION['logged'])){
     header("Location: index.php");
 }
 $person_id = $_SESSION['id'];

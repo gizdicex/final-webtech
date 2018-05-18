@@ -649,6 +649,11 @@ header {
 #map {
     height: 550px;
 }
+#formMap {
+    height: 300px;
+    margin-bottom: 15px;
+    display: none;
+}
 
 
 /*------------------------------------*\

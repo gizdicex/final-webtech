@@ -8,8 +8,8 @@
 
 define("HOSTNAME", "localhost");
 define("USERNAME", "user");
-define("PASSWORD", "159753");
-define("DBNAME", "Final");
+define("PASSWORD", "12345");
+define("DBNAME", "final_project");
 
 
 // Create connection

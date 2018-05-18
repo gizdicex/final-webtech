@@ -32,6 +32,7 @@ function setMap(option) {
                     status = data.status;
 
                 if (status == google.maps.GeocoderStatus.OK) {
+                    console.log("OK");
                     var marker = new google.maps.Marker({
                         title: element,
                         map: baseMap,
@@ -63,6 +64,4 @@ function clearMarkers() {
         element.setMap(null);
     });
     baseMapMarkers = [];
-
 }
-

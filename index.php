@@ -33,7 +33,7 @@ session_start();
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6lI0h7tl0K0YD97a2vrigjLRSie7rSIA&libraries=places"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX0hzrQujtmr0d6wVd_LimQhJ3FY6pjLM&libraries=places"></script>
 
 </head>
 
@@ -73,12 +73,10 @@ session_start();
                 <li><a href="#about">Aktuality</a></li>
                 <li><a href="#mapa">Mapa</a></li>
                 <?php
-
                 if(isset($_SESSION['logged'])) {
                     echo "<li><a href='trening.php'>Tréning</a></li>";
                     if($_SESSION['type'] == "admin") {
                         echo "<li><a href='users.php'>Užívateľia</a></li>";
-
                     }
                     echo "<li><a href='logout.php'>Odhlásiť</a></li>";
                 }
@@ -101,12 +99,10 @@ session_start();
                         <h1 class="white-text">Vitajte na našej stránke</h1>
                         <p class="white-text"> <i>„Je škoda, ak človek zostárne, bez toho aby videl krásu a silu, ktorej je jeho telo schopné.“<br>Socrates</i></p>
                         <?php
-
-                            if(!isset($_SESSION['logged'])) {
-                                echo "<button class='white-btn' onclick='showLogin()' >Prihlásenie</button>";
-                                echo "<button class='main-btn' onclick='showReg()' >Registrácia</button>";
-                            }
-
+                        if(!isset($_SESSION['logged'])) {
+                            echo "<button class='white-btn' onclick='showLogin()' >Prihlásenie</button>";
+                            echo "<button class='main-btn' onclick='showReg()' >Registrácia</button>";
+                        }
                         ?>
                     </div>
                 </div>
@@ -272,7 +268,7 @@ session_start();
 
     <div id="map"></div>
 
-</div>
+</div> 
 <!-- /Map -->
 
 

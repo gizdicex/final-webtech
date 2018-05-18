@@ -5,18 +5,13 @@
  * Date: 13.05.2018
  * Time: 22:13
  */
-
-
 require_once "config.php";
 session_start();
-
 if(!isset($_SESSION['logged']) || $_SESSION['type'] != "admin"){
     header("Location: index.php");
 }
-
 $sql = "SELECT * FROM USER";
 $result = $conn->query($sql);
-
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -136,20 +131,19 @@ $result = $conn->query($sql);
         </tr>
         </thead>
         <tbody>
-    <?php
-
-    if($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            ?>
-            <tr>
-                <td><?php echo $row['name'] ?></td>
-                <td><?php echo $row['surname'] ?></td>
-                <td><?php echo $row['login'] ?></td>
-            </tr>
-            <?php
+        <?php
+        if($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                ?>
+                <tr>
+                    <td><?php echo $row['name'] ?></td>
+                    <td><?php echo $row['surname'] ?></td>
+                    <td><?php echo $row['login'] ?></td>
+                </tr>
+                <?php
+            }
         }
-    }
-    ?>
+        ?>
         </tbody>
     </table>
 </div>

@@ -14,12 +14,12 @@ if(isset($_POST['login'])){
     $login = htmlspecialchars($_POST['login']);
     $pass = hash('sha256', htmlspecialchars($_POST['pass']));
 
-    $sql = "SELECT id,type,subscribe FROM USER WHERE login = '$login' AND password = '$pass'";
+    $sql = "SELECT User_id,type,subscribe FROM USER WHERE login = '$login' AND password = '$pass'";
     $result = $conn->query($sql);
     if ($result->num_rows == 1) {
 
         $row = $result->fetch_assoc();
-        $id = $row['id'];
+        $id = $row['User_id'];
         $type = $row['type'];
         $subscribe = $row['subscribe'];
 /*

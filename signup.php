@@ -17,7 +17,7 @@ if(isset($_POST['name'])) {
     $city = $_POST['city'];
     $pass = hash('sha256', $_POST['pass']);
     $key = md5($mail.date("H:i:s"));
-    $sql = "SELECT id FROM USER WHERE login = '$mail'";
+    $sql = "SELECT User_id FROM USER WHERE login = '$mail'";
     $result = $conn->query($sql);
     //Ak neexistuje user s danym emailom
     if($result->num_rows < 1) {

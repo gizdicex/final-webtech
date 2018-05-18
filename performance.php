@@ -125,7 +125,9 @@ $result = $conn->query($sql);
 
 <!-- Table -->
 <div class="container">
+    <button onclick="javascript:demoFromHTML()">PDF</button>
     <button id="import-btn" class="btn btn-default" onclick="showImport()">Import CSV</button>
+    <div id="content">
     <table class="table table-striped" id="myTable">
         <thead>
         <tr>
@@ -144,6 +146,7 @@ $result = $conn->query($sql);
         if($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 ?>
+
                 <tr>
                     <td><?php echo $row['km'] ?></td>
                     <td><?php echo $row['den'] ?></td>
@@ -179,6 +182,7 @@ $result = $conn->query($sql);
         ?>
         </tbody>
     </table>
+    </div>
 </div>
 <p>  <?php echo "Priemerná  hodnota odbehnutých/odjazdených kilometrov na jeden tréning: " . round($km/$pom,2) ." km" ?>
 </p>
@@ -232,6 +236,9 @@ $result = $conn->query($sql);
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/toPDF.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
 <script type="text/javascript" src="js/tableSort.js"></script>
 

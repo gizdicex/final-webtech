@@ -74,7 +74,8 @@ session_start();
                 <li><a href="#mapa">Mapa</a></li>
                 <?php
 
-                if(isset($_SESSION['logged'])) {    
+                if(isset($_SESSION['logged'])) {
+                    echo "<li><a href='trening.php'>Tréning</a></li>";
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";
                     if($_SESSION['type'] == "admin") {
                         echo "<li><a href='users.php'>Užívateľia</a></li>";
@@ -297,7 +298,14 @@ session_start();
                     <p>Copyright © 2017. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
                 </div>
                 <!-- /footer copyright -->
-
+                <div class="footer-subscribe">
+                    <?php if(isset($_SESSION['logged'])){
+                    if($_SESSION['subscribe'] == 0) { ?>
+                        <a href="subscribe.php"><img height="35px" src="img/subscribe.png" alt="Subscribe"/></a>
+                    <?php } else { ?>
+                        <a href="subscribe.php?un=true">Unsubscribe</a>
+                    <?php }} ?>
+                </div>
             </div>
 
         </div>

@@ -70,7 +70,7 @@ $result = $conn->query($sql);
                 <li><a href="index.php#mapa">Mapa</a></li>
                 <?php
                 if(isset($_SESSION['logged'])) {
-                    echo "<li><a href='#'>Tréning</a></li>";
+                    echo "<li><a href='trening.php'>Tréning</a></li>";
                     if($_SESSION['type'] == "admin") {
                         echo "<li class='active'><a href='users.php'>Užívateľia</a></li>";
                     }

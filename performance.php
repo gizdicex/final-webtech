@@ -89,44 +89,11 @@ $result = $conn->query($sql);
     <!-- /Nav -->
 </header>
 
-<!-- Import Modal -->
-<div id="id04" class="w3-modal">
-    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
-        <div class="w3-center"><br>
-            <h3>Vybrať súbor</h3>
-        </div>
-
-        <form class="w3-container" enctype="multipart/form-data" method="post" action="import.php">
-            <div class="w3-section">
-                <input type="hidden" name="MAX_FILE_SIZE" value="30000">
-                <label><b>CSV súbor</b></label>
-                <input class="w3-input w3-border" type="file" id="csv" name="csv" required>
-                <label><b>Oddeľovač</b></label>
-                <input class="w3-input w3-border" type="text" name="delimeter" maxlength="1">
-                <div class="form-group">
-                    <label for="encoding">Kódovanie</label>
-                    <select name="encoding" class="form-control" id="encoding" >
-                        <option value="Windows-1250">Windows-1250</option>
-                        <option value="UTF-8">UTF-8</option>
-                    </select>
-                </div>
-                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Importovať</button>
-            </div>
-        </form>
-
-        <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-            <button onclick="document.getElementById('id04').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
-        </div>
-
-    </div>
-</div>
-<!-- /Import Modal -->
 
 <!-- Table -->
 <div class="container">
     <button onclick="javascript:demoFromHTML()">PDF</button>
-    <button id="import-btn" class="btn btn-default" onclick="showImport()">Import CSV</button>
     <div id="content">
     <table class="table table-striped" id="myTable">
         <thead>
@@ -148,7 +115,7 @@ $result = $conn->query($sql);
                 ?>
 
                 <tr>
-                    <td><?php echo $row['km'] ?></td>
+                    <td><?php echo $row['km'] ?>km</td>
                     <td><?php echo $row['den'] ?></td>
                     <td><?php echo $row['zcas'] ?></td>
                     <td><?php echo $row['kcas'] ?></td>

@@ -24,6 +24,31 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
         echo("Error description: " . mysqli_error($con));
     }else echo "Trasa bola úspešne pridaná";
 
+}
+
+if(isset($_POST['km']) ) {
+    $km = $_POST['km'];
+    $den = $_POST['den'];
+    $zaciatok = $_POST['zaciatok'];
+    $koniec = $_POST['koniec'];
+    $gps_zaciatok = $_POST['gps_zaciatok'];
+    $gps_koniec = $_POST['gps_koniec'];
+    $hodnotenie = $_POST['hodnotenie'];
+    $poznamka = $_POST['poznamka'];
+
+    if (empty($den)) $den = "NULL"; else $den = "'$den'";
+    if (empty($zaciatok)) $zaciatok = "NULL"; else $zaciatok = "'$zaciatok'";
+    if (empty($koniec)) $koniec = "NULL"; else $koniec = "'$koniec'";
+    if (empty($gps_zaciatok)) $gps_zaciatok = "NULL"; else $gps_zaciatok = "'$gps_zaciatok'";
+    if (empty($gps_koniec)) $gps_koniec = "NULL"; else $gps_koniec = "'$gps_koniec'";
+    if (empty($hodnotenie)) $hodnotenie = "NULL"; else $hodnotenie = "'$hodnotenie'";
+    if (empty($poznamka)) $poznamka = "NULL"; else $poznamka = "'$poznamka'";
+
+    $id = $_SESSION['id'];
+    if (!mysqli_query($conn, "INSERT INTO POKROKY (km,den,zcas,kcas,zgps,kgps,hodnotenie,poznamka,USER_ID) VALUES ('$km',$den,$zaciatok,$koniec,$gps_zaciatok,$gps_koniec,$hodnotenie,$poznamka,'$id')")) {
+        echo("Error description: " . mysqli_error($con));
+    } else
+        echo "Pokrok bol úspešne pridaný";
 
 }
 
@@ -236,8 +261,6 @@ if(isset($_POST['km']) ) {
     </div>
 </div>
 <!-- /Udaje Modal -->
-
-
 
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">

@@ -123,11 +123,13 @@ $result = $conn->query($sql);
             <th onclick="sortTable(0)"><b>Aktivnost</b></th>
             <th onclick="sortTable(1)"><b>Vzdialenost</b></th>
             <th onclick="sortTable(2)"><b>Mód</b></th>
+
             <?php if($_SESSION['type'] == "admin")  echo "<th onclick='sortTable(2)'><b>Uživateľ</b></th>"; ?>
         </tr>
         </thead>
         <tbody id="tab-data">
         </tbody>
+
     </table>
     </div>
 </div>
@@ -188,6 +190,7 @@ $result = $conn->query($sql);
 <script type="text/javascript" src="js/tableSort.js"></script>
 <script type="text/javascript" src="js/toPDF.js"></script>
 <script type="text/javascript" src="js/fillTable.js"></script>
+
 
 </body>
 </html>

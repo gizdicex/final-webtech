@@ -824,3 +824,6 @@ header {
             transform:scale(0);
   }
 }
+#btn-link:hover {
+    color: #FFF !important;
+}

@@ -5,18 +5,13 @@
  * Date: 13.05.2018
  * Time: 22:13
  */
-
-
 require_once "config.php";
 session_start();
-
 if(!isset($_SESSION['logged']) || $_SESSION['type'] != "admin"){
     header("Location: index.php");
 }
-
 $sql = "SELECT * FROM USER";
 $result = $conn->query($sql);
-
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -73,7 +68,6 @@ $result = $conn->query($sql);
                 <li><a href="index.php">Úvod</a></li>
                 <li><a href="index.php#about">Aktuality</a></li>
                 <li><a href="index.php#mapa">Mapa</a></li>
-
                 <?php
                 if(isset($_SESSION['logged'])) {
                     echo "<li><a href='#'>Tréning</a></li>";
@@ -106,6 +100,13 @@ $result = $conn->query($sql);
                 <input class="w3-input w3-border" type="file" id="csv" name="csv" required>
                 <label><b>Delimeter</b></label>
                 <input class="w3-input w3-border" type="text" name="delimeter" maxlength="1">
+                <div class="form-group">
+                    <label for="encoding">Kódovanie</label>
+                    <select name="encoding" class="form-control" id="encoding" >
+                        <option value="Windows-1250">Windows-1250</option>
+                        <option value="UTF-8">UTF-8</option>
+                    </select>
+                </div>
                 <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Importovať</button>
             </div>
         </form>
@@ -130,20 +131,19 @@ $result = $conn->query($sql);
         </tr>
         </thead>
         <tbody>
-    <?php
-
-    if($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            ?>
-            <tr>
-                <td><?php echo $row['name'] ?></td>
-                <td><?php echo $row['surname'] ?></td>
-                <td><?php echo $row['login'] ?></td>
-            </tr>
-            <?php
+        <?php
+        if($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                ?>
+                <tr>
+                    <td><?php echo $row['name'] ?></td>
+                    <td><?php echo $row['surname'] ?></td>
+                    <td><?php echo $row['login'] ?></td>
+                </tr>
+                <?php
+            }
         }
-    }
-    ?>
+        ?>
         </tbody>
     </table>
 </div>

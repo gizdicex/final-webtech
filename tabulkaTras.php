@@ -2,11 +2,20 @@
 
 require_once "config.php";
 session_start();
+if(isset($_SESSION['logged']) && $_SESSION['type'] == "admin"){
+    $sql = "SELECT * FROM TRASA t LEFT JOIN USER u ON t.id_user=u.id LEFT JOIN USER_PATH up ON t.id=up.id_trasa";
+    $result = $conn->query($sql);
+}
+else if (isset($_SESSION['logged']) && $_SESSION['type'] == "basic"){
+    $person_id = $_SESSION['id'];
+    $sql = "SELECT * FROM TRASA t LEFT JOIN USER u ON t.id_user=u.id LEFT JOIN USER_PATH up ON t.id=up.id_trasa WHERE t.Mode = 1 || t.Mode = 2 || $person_id = t.id_user";
+    $result = $conn->query($sql);
 
-if(!isset($_SESSION['logged'])) header("Location: index.php");
+}
 
-$sql = "SELECT * FROM TRASA t LEFT JOIN USER u ON t.id_user=u.id LEFT JOIN USER_PATH up ON t.id=up.id_trasa";
-$result = $conn->query($sql);
+else{
+    header("Location: index.php");
+}
 
 if(!isset($_SESSION['logged'])) header("Location: index.php");
 
@@ -52,6 +61,7 @@ if(isset($_POST['km']) ) {
         echo "Pokrok bol úspešne pridaný";
 
 }
+
 
 
 ?>
@@ -167,6 +177,7 @@ if(isset($_POST['km']) ) {
 <!-- /Trasa Modal -->
 
 
+
 <!-- Udaje Modal -->
 <div id="id02" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
@@ -186,7 +197,13 @@ if(isset($_POST['km']) ) {
                 <label><b>GPS Konca</b></label>
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_koniec" >
                 <label><b>Hodnotenie</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="number" placeholder="Zadaj hodnotenie" name="hodnotenie" >
+                <br>
+                <input type='radio' name='hodnotenie' value='1' id="thing"/><label for="thing"><a class="cisla">1</a></label>
+                <input type='radio' name='hodnotenie' value='2' id="thing1"/><label for="thing1"><a class="cisla">2</a></label>
+                <input type='radio' name='hodnotenie' value='3' id="thing2"/><label for="thing2"><a class="cisla">3</a></label>
+                <input type='radio' name='hodnotenie' value='4' id="thing3"/><label for="thing3"><a class="cisla">4</a></label>
+                <input type='radio' name='hodnotenie' value='5' id="thing4"/><label for="thing4"><a class="cisla">5</a></label>
+                <br>
 
                 <label><b>Poznámka</b></label>
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj poznámky" name="poznamka" >

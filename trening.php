@@ -24,6 +24,33 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
 
 
 }
+
+if(isset($_POST['km']) ) {
+    $km = $_POST['km'];
+    $den = $_POST['den'];
+    $zaciatok = $_POST['zaciatok'];
+    $koniec = $_POST['koniec'];
+    $gps_zaciatok = $_POST['gps_zaciatok'];
+    $gps_koniec = $_POST['gps_koniec'];
+    $hodnotenie = $_POST['hodnotenie'];
+    $poznamka = $_POST['poznamka'];
+
+    if(empty($den)) $den = "NULL"; else $den = "'$den'";
+    if(empty($zaciatok)) $zaciatok = "NULL"; else $zaciatok = "'$zaciatok'";
+    if(empty($koniec)) $koniec = "NULL"; else $koniec = "'$koniec'";
+    if(empty($gps_zaciatok)) $gps_zaciatok = "NULL"; else $gps_zaciatok = "'$gps_zaciatok'";
+    if(empty($gps_koniec)) $gps_koniec = "NULL"; else $gps_koniec = "'$gps_koniec'";
+    if(empty($hodnotenie)) $hodnotenie = "NULL"; else $hodnotenie = "'$hodnotenie'";
+    if(empty($poznamka)) $poznamka = "NULL"; else $poznamka = "'$poznamka'";
+
+    if (!mysqli_query($conn,"INSERT INTO POKROKY (km,den,zcas,kcas,zgps,kgps,hodnotenie,poznamka,USER_ID) VALUES ('$km',$den,$zaciatok,$koniec,$gps_zaciatok,$gps_koniec,$hodnotenie,$poznamka,'$id')"))
+    {
+        echo("Error description: " . mysqli_error($con));
+    }else
+        echo "Pokrok bol úspešne pridaný";
+
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -172,7 +199,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
 <div id="id02" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
-        <form class="w3-container" method="post" action="signup.php">
+        <form class="w3-container" method="post" action="trening.php">
             <div class="w3-section">
                 <label><b>Prejdené km</b></label>
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj počet prejdených km" name="km" required>
@@ -187,7 +214,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
                 <label><b>GPS Konca</b></label>
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_koniec" >
                 <label><b>Hodnotenie</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj hodnotenie" name="hodnotenie" required>
+                <input class="w3-input w3-border w3-margin-bottom" type="number" placeholder="Zadaj hodnotenie" name="hodnotenie" >
 
                 <label><b>Poznámka</b></label>
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj poznámky" name="poznamka" >

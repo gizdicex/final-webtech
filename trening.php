@@ -43,6 +43,7 @@ if(isset($_POST['km']) ) {
     if (empty($hodnotenie)) $hodnotenie = "NULL"; else $hodnotenie = "'$hodnotenie'";
     if (empty($poznamka)) $poznamka = "NULL"; else $poznamka = "'$poznamka'";
 
+    $id = $_SESSION['id'];
     if (!mysqli_query($conn, "INSERT INTO POKROKY (km,den,zcas,kcas,zgps,kgps,hodnotenie,poznamka,USER_ID) VALUES ('$km',$den,$zaciatok,$koniec,$gps_zaciatok,$gps_koniec,$hodnotenie,$poznamka,'$id')")) {
         echo("Error description: " . mysqli_error($con));
     } else

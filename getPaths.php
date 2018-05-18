@@ -13,8 +13,16 @@ header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 if(!isset($_SESSION['logged'])) header("Location: index.php");
 
-$sql = "SELECT * FROM TRASA t LEFT JOIN USER u ON t.id_user=u.id LEFT JOIN USER_PATH up ON t.id=up.id_trasa";
-$result = $conn->query($sql);
+if(isset($_SESSION['logged']) && $_SESSION['type'] == "admin"){
+    $sql = "SELECT * FROM TRASA t LEFT JOIN USER u ON t.id_user=u.id LEFT JOIN USER_PATH up ON t.id=up.id_trasa";
+    $result = $conn->query($sql);
+}
+else if (isset($_SESSION['logged']) && $_SESSION['type'] == "basic"){
+    $person_id = $_SESSION['id'];
+    $sql = "SELECT * FROM TRASA t LEFT JOIN USER u ON t.id_user=u.id LEFT JOIN USER_PATH up ON t.id=up.id_trasa WHERE t.Mode = 1 || t.Mode = 2 || $person_id = t.id_user";
+    $result = $conn->query($sql);
+
+}
 
 if ($result->num_rows > 0) {
     $resultArray = array();

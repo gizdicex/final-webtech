@@ -20,7 +20,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
     {
         echo("Error description: " . mysqli_error($con));
     }else
-    echo "Pridane";
+    echo "Trasa bola úspešne pridaná";
 
 
 }
@@ -119,7 +119,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
                         <?php
                         if(isset($_SESSION['logged'])) {
                             echo "<button class='white-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Pridaj Trasu</button>";
-                            echo "<button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Registrácia</button>";
+                            echo "<button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Zadaj Údaje</button>";
                         }
                         ?>
                     </div>
@@ -168,31 +168,30 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
 </div>
 <!-- /Trasa Modal -->
 
-<!-- Registration Modal -->
+<!-- Udaje Modal -->
 <div id="id02" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
         <form class="w3-container" method="post" action="signup.php">
             <div class="w3-section">
-                <label><b>Meno</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Meno" name="name" required>
-                <label><b>Priezvisko</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Priezvisko" name="sname" required>
-                <label><b>Email</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="email" placeholder="Zadaj Email" name="email" required>
-                <label><b>Heslo</b></label>
-                <input class="w3-input w3-border" type="password" placeholder="Zadaj Heslo" name="pass" required>
-                <label><b>Škola</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Školu" name="school" required>
-                <label><b>Adresa školy</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj adresu školy" name="school_addr" required>
-                <label><b>Ulica</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Ulicu" name="street" required>
-                <label><b>PSČ</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj PSČ" name="psc" required>
-                <label><b>Obec</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj Obec" name="city" required>
-                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Registrovať</button>
+                <label><b>Prejdené km</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj počet prejdených km" name="km" required>
+                <label><b>Deň</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="date" placeholder="Zadaj deň" name="den" >
+                <label><b>Začiatok tréningu</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="time" placeholder="Zadaj začiatok tréningu" name="zaciatok" >
+                <label><b>Koniec tréningu</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="time" placeholder="Zadaj koniec tréningu" name="koniec"     >
+                <label><b>GPS Začiatku</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_zaciatok" >
+                <label><b>GPS Konca</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_koniec" >
+                <label><b>Hodnotenie</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj hodnotenie" name="hodnotenie" required>
+
+                <label><b>Poznámka</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj poznámky" name="poznamka" >
+                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Pridať</button>
             </div>
         </form>
 
@@ -202,7 +201,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
 
     </div>
 </div>
-<!-- /Registration Modal -->
+<!-- /Udaje Modal -->
 
 <!-- Add Article Modal -->
 <div id="id03" class="w3-modal">

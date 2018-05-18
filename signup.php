@@ -32,7 +32,7 @@ if(isset($_POST['name'])) {
         if ($conn->query($sql)) {
             sendMail($mail, $key);
             $msg = "Overovací email bol odoslaný";
-            $submsg = "Pre opätovné odoslanie emailu slačte tlačidlo nižšie";
+            $submsg = "Pre návrat na hlavnú stránku stlačte tlačidlo nižšie";
         }
         else {
             echo "chyba1 ";
@@ -105,7 +105,7 @@ function sendMail($email, $userKey) {
                         <h1 class="white-text"><?= $msg ?></h1>
                         <p class="white-text"><?= $submsg ?></p>
                         <a id="btn-link" href="index.php" class='main-btn' onclick='showReg()' >Návrat na hlavnú stránku</a>
-                        <button href="index.php" class='white-btn' onclick='showReg()' >Opätovné odoslanie emailu</button>
+                        <!--button href="index.php" class='white-btn' onclick='showReg()' >Opätovné odoslanie emailu</button-->
                     </div>
                 </div>
                 <!-- /home content -->

@@ -2,22 +2,32 @@
 /**
  * Created by PhpStorm.
  * User: Taiwin
- * Date: 13.05.2018
- * Time: 22:13
+ * Date: 08.05.2018
+ * Time: 16:38
  */
 
-
 require_once "config.php";
+
 session_start();
 
-if(!isset($_SESSION['logged']) || $_SESSION['type'] != "admin"){
-    header("Location: index.php");
+if(!isset($_SESSION['logged'])) header("Location: index.php");
+
+if(isset($_POST['start']) && isset($_POST['end'])) {
+
+    $origin =$_POST['start']; $destination = $_POST['end']; $vzdialenost = $_POST['vzdialenost'];
+
+    $start = $_POST['start'];
+    $end = $_POST['end'];
+    if (!mysqli_query($conn,"INSERT INTO TRASA (Start,End,Vzdialenost) VALUES ('$start','$end',$vzdialenost)"))
+    {
+        echo("Error description: " . mysqli_error($con));
+    }else
+    echo "Pridane";
+
+
 }
-
-$sql = "SELECT * FROM USER";
-$result = $conn->query($sql);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="sk">
 
@@ -42,13 +52,20 @@ $result = $conn->query($sql);
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
+
 </head>
 
 <body>
 <!-- Header -->
-<header>
+<header id="home">
+    <!-- Background Image -->
+    <div class="bg-img" style="background-image: url('./img/background1.jpg');">
+        <div class="overlay"></div>
+    </div>
+    <!-- /Background Image -->
+
     <!-- Nav -->
-    <nav id="nav" class="navbar">
+    <nav id="nav" class="navbar nav-transparent">
         <div class="container">
 
             <div class="navbar-header">
@@ -73,11 +90,12 @@ $result = $conn->query($sql);
                 <li><a href="index.php">Úvod</a></li>
                 <li><a href="index.php#about">Aktuality</a></li>
                 <li><a href="index.php#mapa">Mapa</a></li>
+
                 <?php
                 if(isset($_SESSION['logged'])) {
-                    echo "<li><a href='#'>Tréning</a></li>";
+                    echo "<li class='active'><a href='trening.php'>Tréning</a></li>";
                     if($_SESSION['type'] == "admin") {
-                        echo "<li class='active'><a href='users.php'>Užívateľia</a></li>";
+                        echo "<li><a href='users.php'>Užívateľia</a></li>";
                     }
                     echo "<li><a href='logout.php'>Odhlásiť</a></li>";
                 }
@@ -88,71 +106,59 @@ $result = $conn->query($sql);
         </div>
     </nav>
     <!-- /Nav -->
-</header>
 
-<!-- Import Modal -->
-<div id="id04" class="w3-modal">
+    <!-- home wrapper -->
+    <div class="home-wrapper">
+        <div class="container">
+            <div class="row">
+
+                <!-- home content -->
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="home-content">
+                        <h1 class="white-text">Vitajte na našej stránke</h1>
+                        <p class="white-text">Popis</p>
+                        <?php
+                        if(isset($_SESSION['logged'])) {
+                            echo "<button class='white-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Pridaj Trasu</button>";
+                        }
+                        ?>
+                    </div>
+                </div>
+                <!-- /home content -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /home wrapper -->
+
+</header>
+<!-- /Header -->
+
+<!-- Trasa Modal -->
+<div id="id01" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
-        <div class="w3-center"><br>
-            <h3>Vybrať súbor</h3>
-        </div>
+        <div id="map"></div>
 
-        <form class="w3-container" enctype="multipart/form-data" method="post" action="import.php">
-            <div class="w3-section">
-                <input type="hidden" name="MAX_FILE_SIZE" value="30000">
-                <label><b>CSV súbor</b></label>
-                <input class="w3-input w3-border" type="file" id="csv" name="csv" required>
-                <label><b>Oddeľovač</b></label>
-                <input class="w3-input w3-border" type="text" name="delimeter" maxlength="1">
-                <div class="form-group">
-                    <label for="encoding">Kódovanie</label>
-                    <select name="encoding" class="form-control" id="encoding" >
-                        <option value="Windows-1250">Windows-1250</option>
-                        <option value="UTF-8">UTF-8</option>
-                    </select>
-                </div>
-                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Importovať</button>
-            </div>
+        <form id="formular" name="theForm" class="w3-container" method="post" action="trening.php">
+            Start:
+            <input id="start-input" class="controls" type="text" name="start" required placeholder="Search Box">
+            <br>Koniec:
+            <input id="end-input" class="controls" type="text" name="end" required placeholder="Search Box">
+            <input id="submitButton" class="w3-button w3-block w3-blue w3-section w3-padding" type="button" value="Ulož Trasu">
+            <div id="hidden_form_container" style="display:none;"></div>
         </form>
 
+
+
         <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-            <button onclick="document.getElementById('id04').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
+            <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
         </div>
 
     </div>
 </div>
-<!-- /Import Modal -->
+<!-- /Trasa Modal -->
 
-<!-- Table -->
-<div class="container">
-    <button id="import-btn" class="btn btn-default" onclick="showImport()">Import CSV</button>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <td><b>Meno</b></td>
-            <td><b>Priezvisko</b></td>
-            <td><b>Email</b></td>
-        </tr>
-        </thead>
-        <tbody>
-    <?php
-
-    if($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            ?>
-            <tr>
-                <td><?php echo $row['name'] ?></td>
-                <td><?php echo $row['surname'] ?></td>
-                <td><?php echo $row['login'] ?></td>
-            </tr>
-            <?php
-        }
-    }
-    ?>
-        </tbody>
-    </table>
-</div>
 
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">
@@ -167,7 +173,7 @@ $result = $conn->query($sql);
 
                 <!-- footer logo -->
                 <div class="footer-logo">
-                    <a href="index.html"><img src="img/logo2.png" alt="logo"></a>
+                    <a href="index.php"><img src="img/logo2.png" alt="logo"></a>
                 </div>
                 <!-- /footer logo -->
 
@@ -206,5 +212,10 @@ $result = $conn->query($sql);
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
 
+
+<script type="text/javascript" src="js/trening.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX0hzrQujtmr0d6wVd_LimQhJ3FY6pjLM&libraries=places&callback=initMap"></script>
+
 </body>
+
 </html>

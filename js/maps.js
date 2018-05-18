@@ -25,16 +25,23 @@ function setMap(option) {
         var bounds = new google.maps.LatLngBounds();
 
         data.forEach(function (element) {
-            geocoder.geocode( { 'address': element}, function(results, status) {
+
+            var url_addr = encodeURIComponent(element);
+            $.getJSON('geocode.php?addr='+url_addr, function(data) {
+                var results = data.results,
+                    status = data.status;
+
                 if (status == google.maps.GeocoderStatus.OK) {
                     var marker = new google.maps.Marker({
+                        title: element,
                         map: baseMap,
                         position: results[0].geometry.location
                     });
                     baseMapMarkers.push(marker);
                     bounds.extend(marker.position);
                     baseMap.fitBounds(bounds);
-                } else {
+                }
+                else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });

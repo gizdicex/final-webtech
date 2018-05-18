@@ -55,7 +55,7 @@ session_start();
             <div class="navbar-header">
                 <!-- Logo -->
                 <div class="navbar-brand">
-                    <a href="index.html">
+                    <a href="index.php">
                         <img class="logo" src="img/logo2.png" alt="logo">
                         <img class="logo-alt" src="img/logo2.png" alt="logo">
                     </a>
@@ -76,7 +76,7 @@ session_start();
                 <li><a href="#mapa">Mapa</a></li>
                 <?php
                     if(isset($_SESSION['logged'])) {
-                        echo "<li><a href='#'>Tréning</a></li>";
+                        echo "<li><a href='trening.php'>Tréning</a></li>";
                         if($_SESSION['type'] == "admin") {
                             echo "<li><a href='users.php'>Užívateľia</a></li>";
                         }
@@ -99,7 +99,7 @@ session_start();
                 <div class="col-md-10 col-md-offset-1">
                     <div class="home-content">
                         <h1 class="white-text">Vitajte na našej stránke</h1>
-                        <p class="white-text">Popis</p>
+                        <p class="white-text"> <i>„Je škoda, ak človek zostárne, bez toho aby videl krásu a silu, ktorej je jeho telo schopné.“<br>Socrates</i></p>
                         <?php
                             if(!isset($_SESSION['logged'])) {
                                 echo "<button class='white-btn' onclick='showLogin()' >Prihlásenie</button>";

@@ -5,9 +5,7 @@
  * Date: 08.05.2018
  * Time: 16:38
  */
-
 require_once "config.php";
-
 session_start();
 ?>
 
@@ -75,13 +73,15 @@ session_start();
                 <li><a href="#about">Aktuality</a></li>
                 <li><a href="#mapa">Mapa</a></li>
                 <?php
-                    if(isset($_SESSION['logged'])) {
-                        echo "<li><a href='trening.php'>Tréning</a></li>";
-                        if($_SESSION['type'] == "admin") {
-                            echo "<li><a href='users.php'>Užívateľia</a></li>";
-                        }
-                        echo "<li><a href='logout.php'>Odhlásiť</a></li>";
+
+                if(isset($_SESSION['logged'])) {
+                    echo "<li><a href='trening.php'>Tréning</a></li>";
+                    if($_SESSION['type'] == "admin") {
+                        echo "<li><a href='users.php'>Užívateľia</a></li>";
+
                     }
+                    echo "<li><a href='logout.php'>Odhlásiť</a></li>";
+                }
                 ?>
             </ul>
             <!-- /Main navigation -->
@@ -101,10 +101,12 @@ session_start();
                         <h1 class="white-text">Vitajte na našej stránke</h1>
                         <p class="white-text"> <i>„Je škoda, ak človek zostárne, bez toho aby videl krásu a silu, ktorej je jeho telo schopné.“<br>Socrates</i></p>
                         <?php
+
                             if(!isset($_SESSION['logged'])) {
                                 echo "<button class='white-btn' onclick='showLogin()' >Prihlásenie</button>";
                                 echo "<button class='main-btn' onclick='showReg()' >Registrácia</button>";
                             }
+
                         ?>
                     </div>
                 </div>
@@ -224,20 +226,19 @@ session_start();
             <div class="about">
 
                 <?php
-                    if(isset($_SESSION['type'])) {
-                        if($_SESSION['type'] == "admin") {
-                            echo "<button class='btn btn-primary' onclick='showArticle()'>Pridať článok</button>";
-                        }
+                if(isset($_SESSION['type'])) {
+                    if($_SESSION['type'] == "admin") {
+                        echo "<button class='btn btn-primary' onclick='showArticle()'>Pridať článok</button>";
                     }
-
-                    $sql = "SELECT * FROM ARTICLE";
-                    $result = $conn->query($sql);
-                    $articles = "";
-                    while($row = $result->fetch_assoc()) {
-                        $article = "<div class='article'><h3>".$row['heading']."</h3><p>".$row['text']."</p></div>";
-                        $articles = $article.$articles;
-                    }
-                    echo $articles;
+                }
+                $sql = "SELECT * FROM ARTICLE";
+                $result = $conn->query($sql);
+                $articles = "";
+                while($row = $result->fetch_assoc()) {
+                    $article = "<div class='article'><h3>".$row['heading']."</h3><p>".$row['text']."</p></div>";
+                    $articles = $article.$articles;
+                }
+                echo $articles;
                 ?>
 
             </div>

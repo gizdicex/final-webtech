@@ -642,12 +642,14 @@ header {
     margin-top: 70px;
 }
 
+
 /*------------------------------------*\
 	Map
 \*------------------------------------*/
 #map {
     height: 550px;
 }
+
 
 /*------------------------------------*\
 	Footer
@@ -821,8 +823,4 @@ header {
     -webkit-transform:scale(0);
             transform:scale(0);
   }
-}
-
-#btn-link:hover {
-    color: #FFF !important;
 }

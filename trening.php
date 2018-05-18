@@ -144,7 +144,6 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
             Start:
             <input id="start-input" class="controls" type="text" name="start" required placeholder="Search Box">
             <br>Koniec:
-
             <input id="end-input" class="controls" type="text" name="end" required placeholder="Search Box">
             <?php if(isset($_SESSION['logged']))
                 if($_SESSION['type'] == "admin") { ?>
@@ -154,7 +153,6 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
                         <option value="2">Verejný</option>
                     </select>
                 <?php } ?>
-
             <div id="output">Dlzka: </div>
             <input id="submitButton" class="w3-button w3-block w3-blue w3-section w3-padding" type="button" value="Ulož Trasu">
             <div id="hidden_form_container" style="display:none;"></div>

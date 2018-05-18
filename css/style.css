@@ -649,6 +649,11 @@ header {
 #map {
     height: 550px;
 }
+#formMap {
+    height: 300px;
+    margin-bottom: 15px;
+    display: none;
+}
 
 
 /*------------------------------------*\
@@ -662,6 +667,11 @@ header {
 .footer-logo {
     text-align: center;
     margin-bottom: 40px;
+}
+
+.footer-subscribe {
+    margin-top: 15px;
+    text-align: center;
 }
 
 .footer-logo>a>img {
@@ -826,33 +836,4 @@ header {
 }
 #btn-link:hover {
     color: #FFF !important;
-}
-
-input[type=radio] {
-    display:none;
-}
-
-input[type=radio] + label {
-    background: #333;
-    height: 50px;
-    width: 50px;
-    display:inline-block;
-    padding: 0 0 0 0px;
-}
-
-input[type=radio]:checked + label {
-    background: #0080FF;
-    height: 50px;
-    width: 50px;
-    display:inline-block;
-    padding: 0 0 0 0px;
-}
-.cisla{
-    font-size: 30px;
-    padding-left: 15px;
-}
-#formMap {
-    height: 300px;
-    margin-bottom: 15px;
-    display: none;
 }

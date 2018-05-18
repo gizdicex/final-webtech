@@ -1,4 +1,3 @@
-
 <?php
 $params = "address=" . urlencode($_GET{'addr'});
 $url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&' . $params;

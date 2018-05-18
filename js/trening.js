@@ -66,7 +66,7 @@ function initMap() {
         directionsService.route({
             origin: inputStart.value,
             destination: inputEnd.value,
-            travelMode:'DRIVING',
+            travelMode:'WALKING',
         }, function(response, status) {
             if (status === 'OK') {
                 directionsDisplay.setDirections(response);

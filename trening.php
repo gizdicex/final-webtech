@@ -19,10 +19,14 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
 
     $start = $_POST['start'];
     $end = $_POST['end'];
-    if (!mysqli_query($conn,"INSERT INTO TRASA (Start,End,Vzdialenost) VALUES ('$start','$end',$vzdialenost)"))
+    $mode = 0;
+    if(isset($_POST['mode'])) $mode = $_POST['mode'];
+    $id = $_SESSION['id'];
+    if (!mysqli_query($conn,"INSERT INTO TRASA (Start,End,Vzdialenost,Mode,id_user) VALUES ('$start','$end',$vzdialenost, $mode, $id)"))
     {
         echo("Error description: " . mysqli_error($con));
     }else echo "Trasa bola úspešne pridaná";
+
 
 }
 

@@ -16,7 +16,7 @@ function setMap(option) {
 
     clearMarkers();
 
-    $.get( "http://147.175.98.179/cviko2/Final/final-webtech/getAddress.php?option="+option, function(data) {
+    $.get( "getAddress.php?option="+option, function(data) {
         console.log("server call succeed");
 
         var data = JSON.parse(data);

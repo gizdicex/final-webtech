@@ -9,7 +9,7 @@ function loadTable(data) {
     var items = [];
     var oneline;
     $.each(JSON.parse(data), function (key, val) {
-        oneline = "<tr><td>" + val.aktivnost + "</td><td>" + val.Vzdialenost + "</td><td>" + val.Mode + "</td>";
+        oneline = "<tr><td>" + val.start + "</td><td>" + val.end + "</td><td>" + val.aktivnost + "</td><td>" + val.Vzdialenost/1000 + "km</td><td>" + val.Mode + "</td>";
         if(val.login) oneline += "<td>" + val.login + "</td>";
         oneline += "</tr>";
         items.push(oneline);

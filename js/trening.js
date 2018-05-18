@@ -44,18 +44,19 @@ function initMap() {
             //var lngg = inputStart.value.geometry.location.lng();
 
             var mapOptions = {
-                center: inputStart.value,
+                center: {lat:0,lng:0},
                 zoom: 16,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
             var directionsDisplay = new google.maps.DirectionsRenderer;
-            map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            directionsDisplay.setMap(map);
+            $("#formMap").slideDown("1000", function () {
+                map = new google.maps.Map(document.getElementById("formMap"), mapOptions);
+                directionsDisplay.setMap(map);
+            });
 
             calculateAndDisplayRoute(directionsService, directionsDisplay);
         }
-
-
+        else $("#formMap").slideUp("1000");
     };
 
     document.getElementById('start-input').addEventListener('change', onChangeHandler);
@@ -70,7 +71,7 @@ function initMap() {
         }, function(response, status) {
             if (status === 'OK') {
                 directionsDisplay.setDirections(response);
-                document.getElementById('output').innerHTML += response.routes[0].legs[0].distance.value/1000 +"km";
+                document.getElementById('output').innerHTML = "Vzdialenosť: "+ response.routes[0].legs[0].distance.value/1000 +"km";
             } else {
                 window.alert('Directions request failed due to ' + status);
             }

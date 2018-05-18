@@ -10,13 +10,15 @@ require_once "config.php";
 
 session_start();
 
-if(isset($_POST['start']) && isset($_POST['end'])) {
+if(isset($_POST['start']) && isset($_POST['end']) && isset($_POST['vzdialenost'])) {		
+    $mode = 0;	
+    if(isset($_POST['mode'])) $mode = $_POST['mode'];
 
     $origin =$_POST['start']; $destination = $_POST['end']; $vzdialenost = $_POST['vzdialenost'];
 
     $start = $_POST['start'];
     $end = $_POST['end'];
-    if (!mysqli_query($conn,"INSERT INTO TRASA (Start,End,Vzdialenost) VALUES ('$start','$end',$vzdialenost)"))
+    if (!mysqli_query($conn,"INSERT INTO TRASA (Start,End,Vzdialenost,Mode) VALUES ('$start','$end',$vzdialenost,$mode)"))
     {
         echo("Error description: " . mysqli_error($con));
     }else
@@ -50,6 +52,8 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgL4JV0gIFoBtD5sQ7CSfI4jgh_LO3UyE&libraries=places&callback=initMap"
+            async defer></script>
 
 </head>
 
@@ -85,7 +89,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
 
             <!--  Main navigation  -->
             <ul class="main-nav nav navbar-nav navbar-right">
-                <li><a href="#home">Úvod</a></li>
+                <li><a href="index.php#home">Úvod</a></li>
                 <li><a href="#about">Aktuality</a></li>
 
                 <li><a href="#mapa">Mapa</a></li>
@@ -144,6 +148,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
             Start:
             <input id="start-input" class="controls" type="text" name="start" required placeholder="Search Box">
             <br>Koniec:
+
             <input id="end-input" class="controls" type="text" name="end" required placeholder="Search Box">
             <?php if(isset($_SESSION['logged']))
                 if($_SESSION['type'] == "admin") { ?>
@@ -153,6 +158,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
                         <option value="2">Verejný</option>
                     </select>
                 <?php } ?>
+
             <div id="output">Dlzka: </div>
             <input id="submitButton" class="w3-button w3-block w3-blue w3-section w3-padding" type="button" value="Ulož Trasu">
             <div id="hidden_form_container" style="display:none;"></div>
@@ -340,11 +346,8 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
 
-
 <script type="text/javascript" src="js/trening.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX0hzrQujtmr0d6wVd_LimQhJ3FY6pjLM&libraries=places&callback=initMap"></script>
 
-<script type="text/javascript" src="js/trening.js"></script>
 
 </body>
 

@@ -1,3 +1,4 @@
+
 function initMap() {
 
     var directionsService = new google.maps.DirectionsService;
@@ -31,7 +32,6 @@ function initMap() {
                 console.log(vzdialenostInput);
                 theForm.appendChild(vzdialenostInput);
 
-
                 theForm.submit();
 
             }else {
@@ -46,22 +46,21 @@ function initMap() {
     });
 
     var onChangeHandler = function() {
-        console.log("im here");
         if ((document.getElementById('start-input').value != '') && (document.getElementById('end-input').value != '')){
-            //var latt = inputStart.value.geometry.location.lat();
-            //var lngg = inputStart.value.geometry.location.lng();
+            var latt = inputStart.value.geometry.location.lat();
+            var lngg = inputStart.value.geometry.location.lng();
 
             var mapOptions = {
                 center: inputStart.value,
                 zoom: 16,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
-            directionsDisplay = new google.maps.DirectionsRenderer;
-            map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            directionsDisplay.setMap(map);
+        directionsDisplay = new google.maps.DirectionsRenderer;
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        directionsDisplay.setMap(map);
 
-            calculateAndDisplayRoute(directionsService, directionsDisplay);
-        }
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+    }
 
         var geocoder = new google.maps.Geocoder;
 
@@ -117,3 +116,4 @@ function initMap() {
     }
 
 }
+

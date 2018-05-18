@@ -63,4 +63,6 @@ function clearMarkers() {
         element.setMap(null);
     });
     baseMapMarkers = [];
+
 }
+

@@ -9,6 +9,9 @@
 require_once "config.php";
 
 if(isset($_GET['login']) && isset($_GET['key'])) {
+
+    session_start();
+
     $login = $_GET['login'];
     $key = $_GET['key'];
 
@@ -32,9 +35,13 @@ if(isset($_GET['login']) && isset($_GET['key'])) {
 
         if($result->num_rows < 1) {
             $sql = "INSERT INTO USER (login,password,name,surname,type,school,school_addr,street,psc,city) VALUES ('$login','$pass','$name','$sname','basic','$school','$school_addr','$street','$psc','$city')";
+            $id = $conn->insert_id;
             if ($conn->query($sql)) {
                 // Do something
                 $sql = "DELETE FROM CONFIRM WHERE login = '$login'";
+                $_SESSION['id'] = $id;
+                $_SESSION['type'] = 'basic';
+                $_SESSION['logged'] = true;
                 if ($conn->query($sql)) header("Location: index.php");;
             } else {
                 echo "chyba1 ";

@@ -36,6 +36,7 @@ if(isset($_POST['km']) ) {
     $gps_koniec = $_POST['gps_koniec'];
     $hodnotenie = $_POST['hodnotenie'];
     $poznamka = $_POST['poznamka'];
+    $trasa = $_POST['trasa'];
 
     if (empty($den)) $den = "NULL"; else $den = "'$den'";
     if (empty($zaciatok)) $zaciatok = "NULL"; else $zaciatok = "'$zaciatok'";
@@ -46,10 +47,9 @@ if(isset($_POST['km']) ) {
     if (empty($poznamka)) $poznamka = "NULL"; else $poznamka = "'$poznamka'";
 
     $id = $_SESSION['id'];
-    if (!mysqli_query($conn, "INSERT INTO POKROKY (km,den,zcas,kcas,zgps,kgps,hodnotenie,poznamka,USER_ID) VALUES ('$km',$den,$zaciatok,$koniec,$gps_zaciatok,$gps_koniec,$hodnotenie,$poznamka,'$id')")) {
+    if (!mysqli_query($conn, "INSERT INTO POKROKY (km,den,zcas,kcas,zgps,kgps,hodnotenie,poznamka,USER_ID,TRASA_ID) VALUES ('$km',$den,$zaciatok,$koniec,$gps_zaciatok,$gps_koniec,$hodnotenie,$poznamka,'$id','$trasa')")) {
         echo("Error description: " . mysqli_error($con));
-    } else
-        echo "Pokrok bol úspešne pridaný";
+    }
 
 }
 
@@ -130,8 +130,9 @@ if(isset($_POST['km']) ) {
     </nav>
     <!-- /Nav -->
 </header>
+<div class="container">
 <button class='main-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Pridaj Trasu</button>
-<button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Zadaj Údaje</button>
+</div>
 <!-- Trasa Modal -->
 <div id="id01" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
@@ -170,46 +171,6 @@ if(isset($_POST['km']) ) {
 
 
 
-<!-- Udaje Modal -->
-<div id="id02" class="w3-modal">
-    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-
-        <form class="w3-container" method="post" action="tabulkaTras.php">
-            <div class="w3-section">
-                <label><b>Prejdené km</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj počet prejdených km" name="km" required>
-                <label><b>Deň</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="date" placeholder="Zadaj deň" name="den" >
-                <label><b>Začiatok tréningu</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="time" placeholder="Zadaj začiatok tréningu" name="zaciatok" >
-                <label><b>Koniec tréningu</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="time" placeholder="Zadaj koniec tréningu" name="koniec"     >
-                <label><b>GPS Začiatku</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_zaciatok" >
-                <label><b>GPS Konca</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_koniec" >
-                <label><b>Hodnotenie</b></label>
-                <br>
-                <input type='radio' name='hodnotenie' value='1' id="thing"/><label for="thing"><a class="cisla">1</a></label>
-                <input type='radio' name='hodnotenie' value='2' id="thing1"/><label for="thing1"><a class="cisla">2</a></label>
-                <input type='radio' name='hodnotenie' value='3' id="thing2"/><label for="thing2"><a class="cisla">3</a></label>
-                <input type='radio' name='hodnotenie' value='4' id="thing3"/><label for="thing3"><a class="cisla">4</a></label>
-                <input type='radio' name='hodnotenie' value='5' id="thing4"/><label for="thing4"><a class="cisla">5</a></label>
-                <br>
-
-                <label><b>Poznámka</b></label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj poznámky" name="poznamka" >
-                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Pridať</button>
-            </div>
-        </form>
-
-        <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-            <button onclick="document.getElementById('id02').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
-        </div>
-
-    </div>
-</div>
-<!-- /Udaje Modal -->
 
 <!-- Import Modal -->
 
@@ -218,6 +179,48 @@ if(isset($_POST['km']) ) {
 <div id="id04" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
+        <button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Pridaj Pokrok</button>
+        <!-- Udaje Modal -->
+        <div id="id02" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+                <form class="w3-container" method="post" action="tabulkaTras.php?id=<?php  echo $_GET['id']; ?>">
+                    <div class="w3-section">
+                        <label><b>Prejdené km</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj počet prejdených km" name="km" required>
+                        <label><b>Deň</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="date" placeholder="Zadaj deň" name="den" >
+                        <label><b>Začiatok tréningu</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="time" placeholder="Zadaj začiatok tréningu" name="zaciatok" >
+                        <label><b>Koniec tréningu</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="time" placeholder="Zadaj koniec tréningu" name="koniec"     >
+                        <label><b>GPS Začiatku</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_zaciatok" >
+                        <label><b>GPS Konca</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj GPS" name="gps_koniec" >
+                        <label><b>Hodnotenie</b></label>
+                        <br>
+                        <input type='radio' name='hodnotenie' value='1' id="thing"/><label for="thing"><a class="cisla">1</a></label>
+                        <input type='radio' name='hodnotenie' value='2' id="thing1"/><label for="thing1"><a class="cisla">2</a></label>
+                        <input type='radio' name='hodnotenie' value='3' id="thing2"/><label for="thing2"><a class="cisla">3</a></label>
+                        <input type='radio' name='hodnotenie' value='4' id="thing3"/><label for="thing3"><a class="cisla">4</a></label>
+                        <input type='radio' name='hodnotenie' value='5' id="thing4"/><label for="thing4"><a class="cisla">5</a></label>
+                        <br>
+
+                        <label><b>Poznámka</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Zadaj poznámky" name="poznamka" >
+                        <input type="text" hidden value="<?php  echo $_GET['id']; ?>" name="trasa" >
+                        <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Pridať</button>
+                    </div>
+                </form>
+
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                    <button onclick="document.getElementById('id02').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
+                </div>
+
+            </div>
+        </div>
+        <!-- /Udaje Modal -->
 
         <table class="table table-striped" id="myTable">
 
@@ -226,16 +229,15 @@ if(isset($_POST['km']) ) {
             $koho = $_GET['id'];
             $sql = "SELECT * FROM Trasa WHERE id='$koho' ";
             $result = $conn->query($sql);
-
 ?>
-            <tr><td>ROZJEBE MA</td></tr>
+            <tr><td></td></tr>
 
 
         </table>
 
-
+        <button onclick="document.getElementById('id04').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
     </div>
-    <button onclick="document.getElementById('id04').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
+
 </div>
 
 
@@ -245,7 +247,6 @@ if(isset($_POST['km']) ) {
 
 <!-- Table -->
 <div class="container">
-    <button onclick="javascript:demoFromHTML()">PDF</button>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Vyhľadaj užívateľa..." title="Type in a name">
     <div id="content">
     <table class="table table-striped" id="myTable">

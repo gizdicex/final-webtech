@@ -210,46 +210,20 @@ if(isset($_POST['km']) ) {
 </div>
 <!-- /Udaje Modal -->
 
-<!-- Import Modal -->
-<div id="id04" class="w3-modal">
-    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-
-        <div class="w3-center"><br>
-            <h3>Vybrať súbor</h3>
-        </div>
-
-        <form class="w3-container" enctype="multipart/form-data" method="post" action="import.php">
-            <div class="w3-section">
-                <input type="hidden" name="MAX_FILE_SIZE" value="30000">
-                <label><b>CSV súbor</b></label>
-                <input class="w3-input w3-border" type="file" id="csv" name="csv" required>
-                <label><b>Delimeter</b></label>
-                <input class="w3-input w3-border" type="text" name="delimeter" maxlength="1">
-                <button class="w3-button w3-block w3-blue w3-section w3-padding" type="submit">Importovať</button>
-            </div>
-        </form>
-
-        <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-            <button onclick="document.getElementById('id04').style.display='none'" type="button" class="w3-button w3-red">Zrušiť</button>
-        </div>
-
-    </div>
-</div>
-<!-- /Import Modal -->
-
-
 
 <!-- Table -->
 <div class="container">
-    <button onclick="javascript:demoFromHTML()">PDF</button>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Vyhľadaj užívateľa..." title="Type in a name">
     <div id="content">
     <table class="table table-striped" id="myTable">
         <thead>
         <tr>
-            <th onclick="sortTable(0)"><b>Aktivnost</b></th>
-            <th onclick="sortTable(1)"><b>Vzdialenost</b></th>
-            <th onclick="sortTable(2)"><b>Mód</b></th>
+            <th onclick="sortTable(0)"><b>Start</b></th>
+            <th onclick="sortTable(1)"><b>Cieľ</b></th>
+            <th onclick="sortTable(2)"><b>Aktivnost</b></th>
+            <th onclick="sortTable(3)"><b>Vzdialenost</b></th>
+            <th onclick="sortTable(4)"><b>Mód</b></th>
+
 
             <?php if($_SESSION['type'] == "admin")  echo "<th onclick='sortTable(2)'><b>Uživateľ</b></th>"; ?>
         </tr>
@@ -312,10 +286,8 @@ if(isset($_POST['km']) ) {
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/tableSort.js"></script>
-<script type="text/javascript" src="js/toPDF.js"></script>
 <script type="text/javascript" src="js/fillTable.js"></script>
 <script type="text/javascript" src="js/trening.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX0hzrQujtmr0d6wVd_LimQhJ3FY6pjLM&libraries=places&callback=initMap"></script>

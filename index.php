@@ -53,7 +53,7 @@ session_start();
             <div class="navbar-header">
                 <!-- Logo -->
                 <div class="navbar-brand">
-                    <a href="index.html">
+                    <a href="index.php">
                         <img class="logo" src="img/logo2.png" alt="logo">
                         <img class="logo-alt" src="img/logo2.png" alt="logo">
                     </a>
@@ -73,6 +73,7 @@ session_start();
                 <li><a href="#about">Aktuality</a></li>
                 <li><a href="#mapa">Mapa</a></li>
                 <?php
+
                 if(isset($_SESSION['logged'])) {
                     echo "<li><a href='trening.php'>Tréning</a></li>";
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";

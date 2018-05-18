@@ -10,6 +10,9 @@ require_once "config.php";
 
 session_start();
 
+
+if(!isset($_SESSION['logged'])) header("Location: index.php");
+
 if(isset($_POST['start']) && isset($_POST['end'])) {
 
     $origin =$_POST['start']; $destination = $_POST['end']; $vzdialenost = $_POST['vzdialenost'];
@@ -19,8 +22,7 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
     if (!mysqli_query($conn,"INSERT INTO TRASA (Start,End,Vzdialenost) VALUES ('$start','$end',$vzdialenost)"))
     {
         echo("Error description: " . mysqli_error($con));
-    }else
-    echo "Trasa bola úspešne pridaná";
+    }else echo "Trasa bola úspešne pridaná";
 
 
 }
@@ -48,6 +50,7 @@ if(isset($_POST['km']) ) {
         echo("Error description: " . mysqli_error($con));
     } else
         echo "Pokrok bol úspešne pridaný";
+
 }
 ?>
 
@@ -110,15 +113,16 @@ if(isset($_POST['km']) ) {
 
             <!--  Main navigation  -->
             <ul class="main-nav nav navbar-nav navbar-right">
-                <li><a href="index.php#home">Úvod</a></li>
-                <li><a href="index.php#about">Aktuality</a></li>
 
+                <li><a href="index.php">Úvod</a></li>
+                <li><a href="index.php#about">Aktuality</a></li>
                 <li><a href="index.php#mapa">Mapa</a></li>
 
                 <?php
                 if(isset($_SESSION['logged'])) {
                     echo "<li><a href='trening.php'>Tréning</a></li>";
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";
+
                     if($_SESSION['type'] == "admin") {
                         echo "<li><a href='users.php'>Užívateľia</a></li>";
                     }
@@ -146,6 +150,7 @@ if(isset($_POST['km']) ) {
                         if(isset($_SESSION['logged'])) {
                             echo "<button class='white-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Pridaj Trasu</button>";
                             echo "<button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Zadaj Údaje</button>";
+
                         }
                         ?>
                     </div>
@@ -171,6 +176,7 @@ if(isset($_POST['km']) ) {
             <input id="start-input" class="controls" type="text" name="start" required placeholder="Search Box">
             <br>Koniec:
             <input id="end-input" class="controls" type="text" name="end" required placeholder="Search Box">
+
             <?php if(isset($_SESSION['logged']))
                 if($_SESSION['type'] == "admin") { ?>
                     <select name="mode" class="controls">
@@ -180,6 +186,7 @@ if(isset($_POST['km']) ) {
                     </select>
                 <?php } ?>
             <div id="output">Dlzka: </div>
+
             <input id="submitButton" class="w3-button w3-block w3-blue w3-section w3-padding" type="button" value="Ulož Trasu">
             <div id="hidden_form_container" style="display:none;"></div>
         </form>
@@ -193,6 +200,7 @@ if(isset($_POST['km']) ) {
     </div>
 </div>
 <!-- /Trasa Modal -->
+
 
 <!-- Udaje Modal -->
 <div id="id02" class="w3-modal">
@@ -368,8 +376,8 @@ if(isset($_POST['km']) ) {
 
 <script type="text/javascript" src="js/trening.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX0hzrQujtmr0d6wVd_LimQhJ3FY6pjLM&libraries=places&callback=initMap"></script>
-
 <script type="text/javascript" src="js/trening.js"></script>
+
 
 </body>
 

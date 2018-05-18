@@ -99,7 +99,7 @@ $result = $conn->query($sql);
                 <input type="hidden" name="MAX_FILE_SIZE" value="30000">
                 <label><b>CSV súbor</b></label>
                 <input class="w3-input w3-border" type="file" id="csv" name="csv" required>
-                <label><b>Delimeter</b></label>
+                <label><b>Oddeľovač</b></label>
                 <input class="w3-input w3-border" type="text" name="delimeter" maxlength="1">
                 <div class="form-group">
                     <label for="encoding">Kódovanie</label>

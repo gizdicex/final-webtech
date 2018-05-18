@@ -5,9 +5,7 @@
  * Date: 08.05.2018
  * Time: 16:38
  */
-
 require_once "config.php";
-
 session_start();
 ?>
 
@@ -35,9 +33,7 @@ session_start();
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
-
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6lI0h7tl0K0YD97a2vrigjLRSie7rSIA&libraries=places"></script>
-
 
 </head>
 
@@ -75,17 +71,15 @@ session_start();
             <ul class="main-nav nav navbar-nav navbar-right">
                 <li><a href="#home">Úvod</a></li>
                 <li><a href="#about">Aktuality</a></li>
-
                 <li><a href="#mapa">Mapa</a></li>
-
                 <?php
-                    if(isset($_SESSION['logged'])) {
-                        echo "<li><a href='#'>Tréning</a></li>";
-                        if($_SESSION['type'] == "admin") {
-                            echo "<li><a href='users.php'>Užívateľia</a></li>";
-                        }
-                        echo "<li><a href='logout.php'>Odhlásiť</a></li>";
+                if(isset($_SESSION['logged'])) {
+                    echo "<li><a href='trening.php'>Tréning</a></li>";
+                    if($_SESSION['type'] == "admin") {
+                        echo "<li><a href='users.php'>Užívateľia</a></li>";
                     }
+                    echo "<li><a href='logout.php'>Odhlásiť</a></li>";
+                }
                 ?>
             </ul>
             <!-- /Main navigation -->
@@ -103,12 +97,12 @@ session_start();
                 <div class="col-md-10 col-md-offset-1">
                     <div class="home-content">
                         <h1 class="white-text">Vitajte na našej stránke</h1>
-                        <p class="white-text">Popis</p>
+                        <p class="white-text"> <i>„Je škoda, ak človek zostárne, bez toho aby videl krásu a silu, ktorej je jeho telo schopné.“<br>Socrates</i></p>
                         <?php
-                            if(!isset($_SESSION['logged'])) {
-                                echo "<button class='white-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Prihlásenie</button>";
-                                echo "<button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Registrácia</button>";
-                            }
+                        if(!isset($_SESSION['logged'])) {
+                            echo "<button class='white-btn' onclick='showLogin()' >Prihlásenie</button>";
+                            echo "<button class='main-btn' onclick='showReg()' >Registrácia</button>";
+                        }
                         ?>
                     </div>
                 </div>
@@ -228,20 +222,19 @@ session_start();
             <div class="about">
 
                 <?php
-                    if(isset($_SESSION['type'])) {
-                        if($_SESSION['type'] == "admin") {
-                            echo "<button class='btn btn-primary' onclick='showArticle()'>Pridať článok</button>";
-                        }
+                if(isset($_SESSION['type'])) {
+                    if($_SESSION['type'] == "admin") {
+                        echo "<button class='btn btn-primary' onclick='showArticle()'>Pridať článok</button>";
                     }
-
-                    $sql = "SELECT * FROM ARTICLE";
-                    $result = $conn->query($sql);
-                    $articles = "";
-                    while($row = $result->fetch_assoc()) {
-                        $article = "<div class='article'><h3>".$row['heading']."</h3><p>".$row['text']."</p></div>";
-                        $articles = $article.$articles;
-                    }
-                    echo $articles;
+                }
+                $sql = "SELECT * FROM ARTICLE";
+                $result = $conn->query($sql);
+                $articles = "";
+                while($row = $result->fetch_assoc()) {
+                    $article = "<div class='article'><h3>".$row['heading']."</h3><p>".$row['text']."</p></div>";
+                    $articles = $article.$articles;
+                }
+                echo $articles;
                 ?>
 
             </div>
@@ -262,10 +255,22 @@ session_start();
         <h2 class="title">Mapa</h2>
     </div>
     <!-- /Section header -->
+
+    <form style="width: 50%; margin: auto" class="text-center" >
+        <div class="form-group">
+            <label for="sel1">Zadajte typ údajov pre mapu:</label>
+            <select class="form-control" id="sel1" onchange="changeOption()">
+                <option value="1">Bydlisko užívateľov</option>
+                <option value="2">Školy, ktoré užívateľia navštevujú</option>
+            </select>
+        </div>
+    </form>
+
     <div id="map"></div>
 
 </div>
 <!-- /Map -->
+
 
 
 <!-- Footer -->
@@ -320,7 +325,6 @@ session_start();
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/modals.js"></script>
 <script type="text/javascript" src="js/maps.js"></script>
-
 
 </body>
 

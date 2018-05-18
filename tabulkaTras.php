@@ -144,7 +144,7 @@ if(isset($_POST['km']) ) {
 <div id="id01" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
-        <div id="map"></div>
+        <div id="formMap"></div>
 
         <form id="formular" name="theForm" class="w3-container" method="post" action="tabulkaTras.php">
             Start:
@@ -160,7 +160,7 @@ if(isset($_POST['km']) ) {
                         <option value="2">Verejný</option>
                     </select>
                 <?php } ?>
-            <div id="output">Dlzka: </div>
+            <div id="output">Vzdialenosť: </div>
 
             <input id="submitButton" class="w3-button w3-block w3-blue w3-section w3-padding" type="button" value="Ulož Trasu">
             <div id="hidden_form_container" style="display:none;"></div>

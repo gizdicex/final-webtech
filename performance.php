@@ -150,7 +150,7 @@ $result = $conn->query($sql);
     </table>
     </div>
 </div>
-<p class="pe">  <?php echo "Priemerná  hodnota odbehnutých/odjazdených kilometrov na jeden tréning: " . round($km/$pom,2) ." km" ?>
+<p class="pe">  <?php if($pom>0){ echo "Priemerná  hodnota odbehnutých/odjazdených kilometrov na jeden tréning: " . round($km/$pom,2) ." km"; }?>
 </p>
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">

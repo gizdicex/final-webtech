@@ -19,21 +19,15 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
     }else {
         $lastTrasa_id = $conn->insert_id;
         echo "Trasa bola úspešne pridaná";
-
     }
     if($_SESSION['type'] == "basic") {
-
         if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$id")) {
             echo("Error description: " . mysqli_error($con));
         }
-
         if (!mysqli_query($conn, "INSERT INTO USER_PATH (id_user,id_trasa,aktivnost,progres) VALUES ('$id','$lastTrasa_id',1,0)")) {
             echo("Error description: " . mysqli_error($con));
         }
     }
-
-
-
 }
 if(isset($_POST['km']) ) {
     $km = $_POST['km'];
@@ -57,20 +51,16 @@ if(isset($_POST['km']) ) {
         echo("Error description: " . mysqli_error($con));
     }
 }
-
 if (isset($_GET['aktivuj'])) {
     $idtrasa = $_GET['aktivuj'];
     $idperson = $_SESSION['id'];
     if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$idperson")) {
         echo("Error description: " . mysqli_error($con));
     }
-
-    if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=1 WHERE id_trasa=$idtrasa")) {
+    if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=1 WHERE id_trasa=$idtrasa && id_user='$idperson'")) {
         echo("Error description: " . mysqli_error($con));
     }
-
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -194,42 +184,69 @@ if (isset($_GET['aktivuj'])) {
 
 <div id="id04" class="w3-modal" onload="bar()">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-<br>
+        <br>
         <div>
             PROGRES:
             <div id="myProgress" >
                 <div id="myBar">
 
-            <?php
-            $idtrasa = $_GET['id'];
-            $idperson = $_SESSION['id'];
+                    <?php
+                    $idtrasa = $_GET['id'];
+                    $idperson = $_SESSION['id'];
 
-            $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where USER_ID='$idperson' && TRASA_id='$idtrasa'");
-            $datapocetkm=mysqli_fetch_assoc($pocetkm);
+                    if($_SESSION['type'] == "basic") {
 
-            $pocetcelkovo = mysqli_query($conn, "SELECT SUM(Vzdialenost) as vzdialenost from TRASA where id_user='$idperson' && Trasa_id='$idtrasa'");
-            $datacelkovo=mysqli_fetch_assoc($pocetcelkovo);
-
-            $progress = round((($datapocetkm['total']*1000)/$datacelkovo['vzdialenost'])*100,2);
-if ($progress > 100) echo "100%";
-else echo "$progress %";
-
-            echo '<script type="text/javascript"> var elem = document.getElementById("myBar");';
-             echo 'elem.style.width = ';
-             echo $progress;
-             echo '+ "%" ;</script>';
+                       
 
 
-             if (!mysqli_query($conn, "UPDATE USER_PATH SET progres='$progress' WHERE id_user=$idperson && id_trasa='$idtrasa'")) {
-                echo("Error description: " . mysqli_error($con));
-            }
+                        $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where USER_ID='$idperson' && TRASA_id='$idtrasa'");
+                        $datapocetkm = mysqli_fetch_assoc($pocetkm);
 
-            ?>
+                        $pocetcelkovo = mysqli_query($conn, "SELECT SUM(Vzdialenost) as vzdialenost from TRASA where (id_user='$idperson' || Mode!=0) && Trasa_id='$idtrasa'");
+                        $datacelkovo = mysqli_fetch_assoc($pocetcelkovo);
 
-            </div>
+                        $progress = round((($datapocetkm['total'] * 1000) / $datacelkovo['vzdialenost']) * 100, 2);
+                        if ($progress > 100) echo "100%";
+                        else echo "$progress %";
+
+                        echo '<script type="text/javascript"> var elem = document.getElementById("myBar");';
+                        echo 'elem.style.width = ';
+                        echo $progress;
+                        echo '+ "%" ;</script>';
+
+
+                        if (!mysqli_query($conn, "UPDATE USER_PATH SET progres='$progress' WHERE id_user=$idperson && id_trasa='$idtrasa'")) {
+                            echo("Error description: " . mysqli_error($con));
+                        }
+                    }
+
+                    if($_SESSION['type'] == "admin") {
+                        $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where TRASA_id='$idtrasa'");
+                        $datapocetkm = mysqli_fetch_assoc($pocetkm);
+
+                        $pocetcelkovo = mysqli_query($conn, "SELECT SUM(Vzdialenost) as vzdialenost from TRASA where Trasa_id='$idtrasa'");
+                        $datacelkovo = mysqli_fetch_assoc($pocetcelkovo);
+
+                        $progress = round((($datapocetkm['total'] * 1000) / $datacelkovo['vzdialenost']) * 100, 2);
+                        if ($progress > 100) echo "100%";
+                        else echo "$progress %";
+
+                        echo '<script type="text/javascript"> var elem = document.getElementById("myBar");';
+                        echo 'elem.style.width = ';
+                        echo $progress;
+                        echo '+ "%" ;</script>';
+
+
+                        if (!mysqli_query($conn, "UPDATE USER_PATH SET progres='$progress' WHERE id_trasa='$idtrasa'")) {
+                            echo("Error description: " . mysqli_error($con));
+                        }
+                    }
+                    ?>
+
+                </div>
             </div>
         </div>
-<br>
+        <br>
         <button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Pridaj Pokrok</button>
         <!-- Udaje Modal -->
         <div id="id02" class="w3-modal">

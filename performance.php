@@ -97,14 +97,14 @@ $result = $conn->query($sql);
     <table class="table table-striped" id="myTable">
         <thead>
         <tr>
-            <th onclick="sortTable(0)"><b>Úsek</b></th>
-            <th onclick="sortTable(1)"><b>Deň</b></th>
-            <th onclick="sortTable(2)"><b>Začiatočný čas</b></th>
-            <th onclick="sortTable(3)"><b>Konečný čas</b></th>
-            <th onclick="sortTable(4)"><b>Začiatočná poloha</b></th>
-            <th onclick="sortTable(5)"><b>Konečná poloha</b></th>
-            <th onclick="sortTable(6)"><b>Hodnotenie<b></th>
-            <th onclick="sortTable(7)"><b>Priemenrná rýchlosť<b></th>
+            <td onclick="sortTable(0)"><b>Úsek</b></td>
+            <td onclick="sortTable(1)"><b>Deň</b></td>
+            <td onclick="sortTable(2)"><b>Začiatočný čas</b></td>
+            <td onclick="sortTable(3)"><b>Konečný čas</b></td>
+            <td onclick="sortTable(4)"><b>Začiatočná poloha</b></td>
+            <td onclick="sortTable(5)"><b>Konečná poloha</b></td>
+            <td onclick="sortTable(6)"><b>Hodnotenie<b></td>
+            <td onclick="sortTable(7)"><b>Priemenrná rýchlosť<b></td>
         </tr>
         </thead>
         <tbody>
@@ -150,7 +150,7 @@ $result = $conn->query($sql);
     </table>
     </div>
 </div>
-<p>  <?php echo "Priemerná  hodnota odbehnutých/odjazdených kilometrov na jeden tréning: " . round($km/$pom,2) ." km" ?>
+<p class="pe">  <?php echo "Priemerná  hodnota odbehnutých/odjazdených kilometrov na jeden tréning: " . round($km/$pom,2) ." km" ?>
 </p>
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">

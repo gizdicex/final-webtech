@@ -34,9 +34,9 @@ if ($result->num_rows > 0) {
         $resultObj->start = $row['Start'];
         $resultObj->end = $row['End'];
         $resultObj->Vzdialenost = $row['Vzdialenost'];
-        if ($row['Mode'] == 0) $row['Mode']= "Privátna";
-        else if ($row['Mode'] == 1) $row['Mode']= "Štafetová";
-        else if ($row['Mode'] == 2) $row['Mode']= "Verejná";
+        if ($row['Mode'] == 0) $row['Mode']= "Privátny";
+        else if ($row['Mode'] == 1) $row['Mode']= "Štafetový";
+        else if ($row['Mode'] == 2) $row['Mode']= "Verejný";
         $resultObj->Mode = $row['Mode'];
         if ($_SESSION['type'] == "admin") $resultObj->login = $row['login'];
         array_push($resultArray, $resultObj);

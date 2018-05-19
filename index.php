@@ -314,7 +314,7 @@ session_start();
 
     </div>
     <!-- /Container -->
-
+    <p class="pe"><a href="dokemntacia.php">Dokumentacia</a></p>
 </footer>
 <!-- /Footer -->
 

@@ -11,7 +11,13 @@ if(!isset($_SESSION['logged'])){
     header("Location: index.php");
 }
 $person_id = $_SESSION['id'];
-$sql = "SELECT * FROM POKROKY where USER_ID=".$person_id;
+
+if($_SESSION['type'] == "basic") {
+    $sql = "SELECT * FROM POKROKY where USER_ID=" . $person_id;
+}
+if($_SESSION['type'] == "admin") {
+    $sql = "SELECT * FROM POKROKY p JOIN USER u ON p.USER_ID = u.User_id ";
+}
 $result = $conn->query($sql);
 
 ?>
@@ -97,6 +103,11 @@ $result = $conn->query($sql);
     <table class="table table-striped" id="myTable">
         <thead>
         <tr>
+        <?php
+            if($_SESSION['type'] == "admin") {
+            echo "<td>Uživateľ</td>";
+            }
+            ?>
             <td onclick="sortTable(0)"><b>Úsek</b></td>
             <td onclick="sortTable(1)"><b>Deň</b></td>
             <td onclick="sortTable(2)"><b>Začiatočný čas</b></td>
@@ -105,6 +116,7 @@ $result = $conn->query($sql);
             <td onclick="sortTable(5)"><b>Konečná poloha</b></td>
             <td onclick="sortTable(6)"><b>Hodnotenie<b></td>
             <td onclick="sortTable(7)"><b>Priemenrná rýchlosť<b></td>
+
         </tr>
         </thead>
         <tbody>
@@ -114,6 +126,16 @@ $result = $conn->query($sql);
                 ?>
 
                 <tr>
+
+                    <?php
+
+                        if($_SESSION['type'] == "admin") {
+                            echo "<td>";
+                            echo $row['login'];
+                            echo "</td>" ;
+                        }
+
+                        ?>
                     <td><?php echo $row['km'] ?>km</td>
                     <td><?php echo $row['den'] ?></td>
                     <td><?php echo $row['zcas'] ?></td>

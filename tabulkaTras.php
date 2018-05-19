@@ -32,6 +32,8 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
         }
     }
 
+
+
 }
 if(isset($_POST['km']) ) {
     $km = $_POST['km'];
@@ -190,9 +192,44 @@ if (isset($_GET['aktivuj'])) {
 
 
 
-<div id="id04" class="w3-modal">
+<div id="id04" class="w3-modal" onload="bar()">
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+<br>
+        <div>
+            PROGRES:
+            <div id="myProgress" >
+                <div id="myBar">
 
+            <?php
+            $idtrasa = $_GET['id'];
+            $idperson = $_SESSION['id'];
+
+            $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where USER_ID='$idperson' && TRASA_id='$idtrasa'");
+            $datapocetkm=mysqli_fetch_assoc($pocetkm);
+
+            $pocetcelkovo = mysqli_query($conn, "SELECT SUM(Vzdialenost) as vzdialenost from TRASA where id_user='$idperson' && Trasa_id='$idtrasa'");
+            $datacelkovo=mysqli_fetch_assoc($pocetcelkovo);
+
+            $progress = round((($datapocetkm['total']*1000)/$datacelkovo['vzdialenost'])*100,2);
+if ($progress > 100) echo "100%";
+else echo "$progress %";
+
+            echo '<script type="text/javascript"> var elem = document.getElementById("myBar");';
+             echo 'elem.style.width = ';
+             echo $progress;
+             echo '+ "%" ;</script>';
+
+
+             if (!mysqli_query($conn, "UPDATE USER_PATH SET progres='$progress' WHERE id_user=$idperson && id_trasa='$idtrasa'")) {
+                echo("Error description: " . mysqli_error($con));
+            }
+
+            ?>
+
+            </div>
+            </div>
+        </div>
+<br>
         <button class='main-btn' onclick='showReg()' class='w3-button w3-green w3-large'>Pridaj Pokrok</button>
         <!-- Udaje Modal -->
         <div id="id02" class="w3-modal">

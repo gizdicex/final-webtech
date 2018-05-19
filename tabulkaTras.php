@@ -19,15 +19,21 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
     }else {
         $lastTrasa_id = $conn->insert_id;
         echo "Trasa bola úspešne pridaná";
+
     }
     if($_SESSION['type'] == "basic") {
+
         if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$id")) {
             echo("Error description: " . mysqli_error($con));
         }
+
         if (!mysqli_query($conn, "INSERT INTO USER_PATH (id_user,id_trasa,aktivnost,progres) VALUES ('$id','$lastTrasa_id',1,0)")) {
             echo("Error description: " . mysqli_error($con));
         }
     }
+
+
+
 }
 if(isset($_POST['km']) ) {
     $km = $_POST['km'];
@@ -51,16 +57,20 @@ if(isset($_POST['km']) ) {
         echo("Error description: " . mysqli_error($con));
     }
 }
+
 if (isset($_GET['aktivuj'])) {
     $idtrasa = $_GET['aktivuj'];
     $idperson = $_SESSION['id'];
     if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$idperson")) {
         echo("Error description: " . mysqli_error($con));
     }
+
     if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=1 WHERE id_trasa=$idtrasa && id_user='$idperson'")) {
         echo("Error description: " . mysqli_error($con));
     }
+
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -85,6 +95,7 @@ if (isset($_GET['aktivuj'])) {
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <script type="text/javascript" src="js/trening.js"></script>
 
 </head>
 
@@ -173,6 +184,9 @@ if (isset($_GET['aktivuj'])) {
 
     </div>
 </div>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX0hzrQujtmr0d6wVd_LimQhJ3FY6pjLM&libraries=places&callback=initMap"></script>
+
 <!-- /Trasa Modal -->
 
 
@@ -186,6 +200,7 @@ if (isset($_GET['aktivuj'])) {
     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
         <br>
         <div>
+            <div id="formMap2" ></div>
             PROGRES:
             <div id="myProgress" >
                 <div id="myBar">
@@ -193,50 +208,48 @@ if (isset($_GET['aktivuj'])) {
                     <?php
                     $idtrasa = $_GET['id'];
                     $idperson = $_SESSION['id'];
-
                     if($_SESSION['type'] == "basic") {
 
-
-
-
                         $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where USER_ID='$idperson' && TRASA_id='$idtrasa'");
-                        $datapocetkm = mysqli_fetch_assoc($pocetkm);
+                        $datapocetkm=mysqli_fetch_assoc($pocetkm);
+
+                        $trasa = mysqli_query($conn, "SELECT Start,End from TRASA where  Trasa_id='$idtrasa'");
+                        $mojatrasa=mysqli_fetch_assoc($trasa);
+
+
 
                         $pocetcelkovo = mysqli_query($conn, "SELECT SUM(Vzdialenost) as vzdialenost from TRASA where (id_user='$idperson' || Mode!=0) && Trasa_id='$idtrasa'");
-                        $datacelkovo = mysqli_fetch_assoc($pocetcelkovo);
+                        $datacelkovo=mysqli_fetch_assoc($pocetcelkovo);
 
-                        $progress = round((($datapocetkm['total'] * 1000) / $datacelkovo['vzdialenost']) * 100, 2);
+                        $progress = round((($datapocetkm['total']*1000)/$datacelkovo['vzdialenost'])*100,2);
                         if ($progress > 100) echo "100%";
                         else echo "$progress %";
 
-                        echo '<script type="text/javascript"> var elem = document.getElementById("myBar");';
+                        echo '<script type="text/javascript">createMap("'.$mojatrasa['Start'].'","'.$mojatrasa['End'].'");
+             var elem = document.getElementById("myBar");';
                         echo 'elem.style.width = ';
-                        echo $progress;
-                        echo '+ "%" ;</script>';
+                        echo $progress ;
+                        echo '+ "%" ;
+                
+                </script>';
 
 
                         if (!mysqli_query($conn, "UPDATE USER_PATH SET progres='$progress' WHERE id_user=$idperson && id_trasa='$idtrasa'")) {
                             echo("Error description: " . mysqli_error($con));
                         }
                     }
-
                     if($_SESSION['type'] == "admin") {
                         $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where TRASA_id='$idtrasa'");
                         $datapocetkm = mysqli_fetch_assoc($pocetkm);
-
                         $pocetcelkovo = mysqli_query($conn, "SELECT SUM(Vzdialenost) as vzdialenost from TRASA where Trasa_id='$idtrasa'");
                         $datacelkovo = mysqli_fetch_assoc($pocetcelkovo);
-
                         $progress = round((($datapocetkm['total'] * 1000) / $datacelkovo['vzdialenost']) * 100, 2);
                         if ($progress > 100) echo "100%";
                         else echo "$progress %";
-
                         echo '<script type="text/javascript"> var elem = document.getElementById("myBar");';
                         echo 'elem.style.width = ';
                         echo $progress;
                         echo '+ "%" ;</script>';
-
-
                         if (!mysqli_query($conn, "UPDATE USER_PATH SET progres='$progress' WHERE id_trasa='$idtrasa'")) {
                             echo("Error description: " . mysqli_error($con));
                         }
@@ -391,8 +404,7 @@ if (isset($_GET['aktivuj'])) {
 <script type="text/javascript" src="js/tableSort.js"></script>
 <script type="text/javascript" src="js/toPDF.js"></script>
 <script type="text/javascript" src="js/fillTable.js"></script>
-<script type="text/javascript" src="js/trening.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX0hzrQujtmr0d6wVd_LimQhJ3FY6pjLM&libraries=places&callback=initMap"></script>
+
 <script type="text/javascript" src="js/trening.js"></script>
 
 

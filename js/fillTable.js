@@ -9,7 +9,8 @@ function loadTable(data) {
     var items = [];
     var oneline;
     $.each(JSON.parse(data), function (key, val) {
-        oneline = "<tr><td  onclick='consolea("+val.id+")'>" + val.start + "</td><td onclick='consolea("+val.id+")'>" + val.end + "</td><td onclick='consolea("+val.id+")'>" + val.aktivnost + "</td><td  onclick='consolea("+val.id+")'>" + val.Vzdialenost/1000 + "km</td><td  onclick='consolea("+val.id+")'>" + val.Mode + "</td><td onclick='spravAktivnu("+val.id+")'>"+ "Aktivuj" +"</td>";
+        oneline = "<tr><td  onclick='consolea("+val.id+")'>" + val.start + "</td><td onclick='consolea("+val.id+")'>" + val.end + "</td><td onclick='consolea("+val.id+")'>" + val.aktivnost + "</td><td  onclick='consolea("+val.id+")'>" + val.Vzdialenost/1000 + "km</td><td  onclick='consolea("+val.id+")'>" + val.Mode + "</td>";
+        if(!val.login) oneline += "<td onclick='spravAktivnu("+val.id+")'>"+ "Aktivuj" +"</td>" ;
         if(val.login) oneline += "<td>" + val.login + "</td>" ;
         oneline += "</tr>";
         items.push(oneline);

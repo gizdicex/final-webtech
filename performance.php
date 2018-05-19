@@ -11,7 +11,6 @@ if(!isset($_SESSION['logged'])){
     header("Location: index.php");
 }
 $person_id = $_SESSION['id'];
-
 if($_SESSION['type'] == "basic") {
     $sql = "SELECT * FROM POKROKY where USER_ID=" . $person_id;
 }
@@ -19,7 +18,6 @@ if($_SESSION['type'] == "admin") {
     $sql = "SELECT * FROM POKROKY p JOIN USER u ON p.USER_ID = u.User_id ";
 }
 $result = $conn->query($sql);
-
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -31,7 +29,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Názov</title>
+    <title>Mondy Run</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -78,12 +76,16 @@ $result = $conn->query($sql);
                 <li><a href="index.php#mapa">Mapa</a></li>
                 <?php
                 if(isset($_SESSION['logged'])) {
+                    $person_id = $_SESSION['id'];
+                    $sql2 = "SELECT * FROM USER where USER_ID=".$person_id;
+                    $result2 = $conn->query($sql2);
+                    $row2 = $result2->fetch_assoc();
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";
                     echo "<li class='active'><a href='performance.php'>Osobný výkon</a>";
                     if($_SESSION['type'] == "admin") {
                         echo "<li ><a href='users.php'>Užívateľia</a></li>";
                     }
-                    echo "<li><a href='logout.php'>Odhlásiť</a></li>";
+                    echo "<li><a href='logout.php'>Dovidenia ".$row2['name']." ".$row2['surname']."</a></li>";
                 }
                 ?>
             </ul>
@@ -100,80 +102,78 @@ $result = $conn->query($sql);
 <div class="container">
     <button onclick="javascript:demoFromHTML()">PDF</button>
     <div id="content">
-    <table class="table table-striped" id="myTable">
-        <thead>
-        <tr>
-        <?php
-            if($_SESSION['type'] == "admin") {
-            echo "<td>Uživateľ</td>";
-            }
-            ?>
-            <td onclick="sortTable(0)"><b>Úsek</b></td>
-            <td onclick="sortTable(1)"><b>Deň</b></td>
-            <td onclick="sortTable(2)"><b>Začiatočný čas</b></td>
-            <td onclick="sortTable(3)"><b>Konečný čas</b></td>
-            <td onclick="sortTable(4)"><b>Začiatočná poloha</b></td>
-            <td onclick="sortTable(5)"><b>Konečná poloha</b></td>
-            <td onclick="sortTable(6)"><b>Hodnotenie<b></td>
-            <td onclick="sortTable(7)"><b>Priemenrná rýchlosť<b></td>
-
-        </tr>
-        </thead>
-        <tbody>
-        <?php $km = 0; $pom = 0;
-        if($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
+        <table class="table table-striped" id="myTable">
+            <thead>
+            <tr>
+                <?php
+                if($_SESSION['type'] == "admin") {
+                    echo "<td>Uživateľ</td>";
+                }
                 ?>
+                <td onclick="sortTable(0)"><b>Úsek</b></td>
+                <td onclick="sortTable(1)"><b>Deň</b></td>
+                <td onclick="sortTable(2)"><b>Začiatočný čas</b></td>
+                <td onclick="sortTable(3)"><b>Konečný čas</b></td>
+                <td onclick="sortTable(4)"><b>Začiatočná poloha</b></td>
+                <td onclick="sortTable(5)"><b>Konečná poloha</b></td>
+                <td onclick="sortTable(6)"><b>Hodnotenie<b></td>
+                <td onclick="sortTable(7)"><b>Priemenrná rýchlosť<b></td>
 
-                <tr>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $km = 0; $pom = 0;
+            if($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    ?>
 
-                    <?php
+                    <tr>
 
+                        <?php
                         if($_SESSION['type'] == "admin") {
                             echo "<td>";
                             echo $row['login'];
                             echo "</td>" ;
                         }
-
                         ?>
-                    <td><?php echo $row['km'] ?>km</td>
-                    <td><?php echo $row['den'] ?></td>
-                    <td><?php echo $row['zcas'] ?></td>
-                    <td><?php echo $row['kcas'] ?></td>
-                    <td><?php echo $row['zgps'] ?></td>
-                    <td><?php echo $row['kgps'] ?></td>
-                    <td><?php echo $row['hodnotenie']  ?></td>
-                    <?php if (!$row['zcas']){
-                        echo '<td> Nemožné </td>';
-                    }
-                    if ($row['zcas']) {
-                        $kilometre = $row['km'];
-                        $kcas = explode(":",$row['kcas']);
-                        $zcas = explode(":",$row['zcas']);
-                        $vysledok[0] = $kcas[0] - $zcas[0];
-                        $vysledok[1] = $kcas[1] - $zcas[1];
-                        $vysledok[2] = $kcas[2] - $zcas[2];
-                        $hodiny = $vysledok[0] + $vysledok[1]/60 + $vysledok[2]/3600;
-                        if ($hodiny == 0){echo '<td>' ."Nemožné" . '</td>';}
-                        else {
-                            $rychlost = $kilometre / $hodiny;
-                            echo '<td>' . round($rychlost, 2) . ' km/hod' . '</td>';
+                        <td><?php echo $row['km'] ?>km</td>
+                        <td><?php echo $row['den'] ?></td>
+                        <td><?php echo $row['zcas'] ?></td>
+                        <td><?php echo $row['kcas'] ?></td>
+                        <td><?php echo $row['zgps'] ?></td>
+                        <td><?php echo $row['kgps'] ?></td>
+                        <td><?php echo $row['hodnotenie']  ?></td>
+                        <?php if (!$row['zcas']){
+                            echo '<td> Nemožné </td>';
                         }
-                    }
-                    $km += $row['km'];
-                    $pom += 1;
-                    ?>
-                </tr>
-                <?php
+                        if ($row['zcas']) {
+                            $kilometre = $row['km'];
+                            $kcas = explode(":",$row['kcas']);
+                            $zcas = explode(":",$row['zcas']);
+                            $vysledok[0] = $kcas[0] - $zcas[0];
+                            $vysledok[1] = $kcas[1] - $zcas[1];
+                            $vysledok[2] = $kcas[2] - $zcas[2];
+                            $hodiny = $vysledok[0] + $vysledok[1]/60 + $vysledok[2]/3600;
+                            if ($hodiny == 0){echo '<td>' ."Nemožné" . '</td>';}
+                            else {
+                                $rychlost = $kilometre / $hodiny;
+                                echo '<td>' . round($rychlost, 2) . ' km/hod' . '</td>';
+                            }
+                        }
+                        $km += $row['km'];
+                        $pom += 1;
+                        ?>
+                    </tr>
+                    <?php
+                }
             }
-        }
-        ?>
-        </tbody>
-    </table>
+            ?>
+            </tbody>
+        </table>
     </div>
 </div>
 <p class="pe">  <?php if($pom>0){ echo "Priemerná  hodnota odbehnutých/odjazdených kilometrov na jeden tréning: " . round($km/$pom,2) ." km"; }
-else echo "Zatial žiadne výkony."?>
+    else echo "Zatial žiadne výkony."?>
 </p>
 <!-- Footer -->
 <footer id="footer" class="sm-padding bg-dark">

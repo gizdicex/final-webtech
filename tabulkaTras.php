@@ -19,21 +19,15 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
     }else {
         $lastTrasa_id = $conn->insert_id;
         echo "Trasa bola úspešne pridaná";
-
     }
     if($_SESSION['type'] == "basic") {
-
         if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$id")) {
             echo("Error description: " . mysqli_error($con));
         }
-
         if (!mysqli_query($conn, "INSERT INTO USER_PATH (id_user,id_trasa,aktivnost,progres) VALUES ('$id','$lastTrasa_id',1,0)")) {
             echo("Error description: " . mysqli_error($con));
         }
     }
-
-
-
 }
 if(isset($_POST['km']) ) {
     $km = $_POST['km'];
@@ -57,20 +51,16 @@ if(isset($_POST['km']) ) {
         echo("Error description: " . mysqli_error($con));
     }
 }
-
 if (isset($_GET['aktivuj'])) {
     $idtrasa = $_GET['aktivuj'];
     $idperson = $_SESSION['id'];
     if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$idperson")) {
         echo("Error description: " . mysqli_error($con));
     }
-
     if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=1 WHERE id_trasa=$idtrasa && id_user='$idperson'")) {
         echo("Error description: " . mysqli_error($con));
     }
-
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -82,7 +72,7 @@ if (isset($_GET['aktivuj'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Názov</title>
+    <title>Mondy Run</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -131,13 +121,16 @@ if (isset($_GET['aktivuj'])) {
 
                 <?php
                 if(isset($_SESSION['logged'])) {
-                    //echo "<li><a href='trening.php'>Tréning</a></li>";
+                    $person_id = $_SESSION['id'];
+                    $sql2 = "SELECT * FROM USER where USER_ID=".$person_id;
+                    $result2 = $conn->query($sql2);
+                    $row2 = $result2->fetch_assoc();
                     echo "<li class='active'><a href='tabulkaTras.php'>Trasy</a>";
                     echo "<li><a href='performance.php'>Osobný výkon</a>";
                     if($_SESSION['type'] == "admin") {
                         echo "<li><a href='users.php'>Užívateľia</a></li>";
                     }
-                    echo "<li><a href='logout.php'>Odhlásiť</a></li>";
+                    echo "<li><a href='logout.php'>Dovidenia ".$row2['name']." ".$row2['surname']."</a></li>";
                 }
                 ?>
             </ul>
@@ -209,22 +202,15 @@ if (isset($_GET['aktivuj'])) {
                     $idtrasa = $_GET['id'];
                     $idperson = $_SESSION['id'];
                     if($_SESSION['type'] == "basic") {
-
                         $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where USER_ID='$idperson' && TRASA_id='$idtrasa'");
                         $datapocetkm=mysqli_fetch_assoc($pocetkm);
-
                         $trasa = mysqli_query($conn, "SELECT Start,End from TRASA where  Trasa_id='$idtrasa'");
                         $mojatrasa=mysqli_fetch_assoc($trasa);
-
-
-
                         $pocetcelkovo = mysqli_query($conn, "SELECT SUM(Vzdialenost) as vzdialenost from TRASA where (id_user='$idperson' || Mode!=0) && Trasa_id='$idtrasa'");
                         $datacelkovo=mysqli_fetch_assoc($pocetcelkovo);
-
                         $progress = round((($datapocetkm['total']*1000)/$datacelkovo['vzdialenost'])*100,2);
                         if ($progress > 100) echo "100%";
                         else echo "$progress %";
-
                         echo '<script type="text/javascript">createMap("'.$mojatrasa['Start'].'","'.$mojatrasa['End'].'");
              var elem = document.getElementById("myBar");';
                         echo 'elem.style.width = ';
@@ -232,8 +218,6 @@ if (isset($_GET['aktivuj'])) {
                         echo '+ "%" ;
                 
                 </script>';
-
-
                         if (!mysqli_query($conn, "UPDATE USER_PATH SET progres='$progress' WHERE id_user=$idperson && id_trasa='$idtrasa'")) {
                             echo("Error description: " . mysqli_error($con));
                         }

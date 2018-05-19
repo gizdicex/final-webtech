@@ -19,7 +19,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Názov</title>
+    <title>Mondy Run</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -73,15 +73,17 @@ session_start();
                 <li><a href="#about">Aktuality</a></li>
                 <li><a href="#mapa">Mapa</a></li>
                 <?php
-
                 if(isset($_SESSION['logged'])) {
+                    $person_id = $_SESSION['id'];
+                    $sql2 = "SELECT * FROM USER where USER_ID=".$person_id;
+                    $result2 = $conn->query($sql2);
+                    $row2 = $result2->fetch_assoc();
                     echo "<li><a href='tabulkaTras.php'>Trasy</a>";
                     echo "<li><a href='performance.php'>Osobný výkon</a>";
-
                     if($_SESSION['type'] == "admin") {
                         echo "<li><a href='users.php'>Užívateľia</a></li>";
                     }
-                    echo "<li><a href='logout.php'>Odhlásiť</a></li>";
+                    echo "<li><a href='logout.php'>Dovidenia ".$row2['name']." ".$row2['surname']."</a></li>";
                 }
                 ?>
             </ul>
@@ -99,7 +101,7 @@ session_start();
                 <!-- home content -->
                 <div class="col-md-10 col-md-offset-1">
                     <div class="home-content">
-                        <h1 class="white-text">Vitajte na našej stránke</h1>
+                        <h1 class="white-text">Vitajte na stránke<br>Mondy Run</h1>
                         <p class="white-text"> <i>„Je škoda, ak človek zostárne, bez toho aby videl krásu a silu, ktorej je jeho telo schopné.“<br>Socrates</i></p>
                         <?php
                         if(!isset($_SESSION['logged'])) {
@@ -271,7 +273,7 @@ session_start();
 
     <div id="map"></div>
 
-</div> 
+</div>
 <!-- /Map -->
 
 
@@ -301,11 +303,11 @@ session_start();
                 <!-- /footer copyright -->
                 <div class="footer-subscribe">
                     <?php if(isset($_SESSION['logged'])){
-                    if($_SESSION['subscribe'] == 0) { ?>
-                        <a href="subscribe.php"><img height="35px" src="img/subscribe.png" alt="Subscribe"/></a>
-                    <?php } else { ?>
-                        <a href="subscribe.php?un=true">Unsubscribe</a>
-                    <?php }} ?>
+                        if($_SESSION['subscribe'] == 0) { ?>
+                            <a href="subscribe.php"><img height="35px" src="img/subscribe.png" alt="Subscribe"/></a>
+                        <?php } else { ?>
+                            <a href="subscribe.php?un=true">Unsubscribe</a>
+                        <?php }} ?>
                 </div>
             </div>
 

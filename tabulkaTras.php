@@ -1,19 +1,13 @@
 <?php
-
 require_once "config.php";
 session_start();
-
-
 if(!isset($_SESSION['logged'])){
     header("Location: index.php");
 }
-
-if(!isset($_SESSION['logged'])) header("Location: index.php");
-
 if(isset($_POST['start']) && isset($_POST['end'])) {
-
-    $origin =$_POST['start']; $destination = $_POST['end']; $vzdialenost = $_POST['vzdialenost'];
-
+    $origin =$_POST['start'];
+    $destination = $_POST['end'];
+    $vzdialenost = $_POST['vzdialenost'];
     $start = $_POST['start'];
     $end = $_POST['end'];
     $mode = 0;
@@ -22,11 +16,23 @@ if(isset($_POST['start']) && isset($_POST['end'])) {
     if (!mysqli_query($conn,"INSERT INTO TRASA (Start,End,Vzdialenost,Mode,id_user) VALUES ('$start','$end',$vzdialenost, $mode, $id)"))
     {
         echo("Error description: " . mysqli_error($con));
-    }else echo "Trasa bola úspešne pridaná";
+    }else {
+        $lastTrasa_id = $conn->insert_id;
+        echo "Trasa bola úspešne pridaná";
 
+    }
+    if($_SESSION['type'] == "basic") {
+
+        if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$id")) {
+            echo("Error description: " . mysqli_error($con));
+        }
+
+        if (!mysqli_query($conn, "INSERT INTO USER_PATH (id_user,id_trasa,aktivnost,progres) VALUES ('$id','$lastTrasa_id',1,0)")) {
+            echo("Error description: " . mysqli_error($con));
+        }
+    }
 
 }
-
 if(isset($_POST['km']) ) {
     $km = $_POST['km'];
     $den = $_POST['den'];
@@ -37,7 +43,6 @@ if(isset($_POST['km']) ) {
     $hodnotenie = $_POST['hodnotenie'];
     $poznamka = $_POST['poznamka'];
     $trasa = $_POST['trasa'];
-
     if (empty($den)) $den = "NULL"; else $den = "'$den'";
     if (empty($zaciatok)) $zaciatok = "NULL"; else $zaciatok = "'$zaciatok'";
     if (empty($koniec)) $koniec = "NULL"; else $koniec = "'$koniec'";
@@ -45,15 +50,24 @@ if(isset($_POST['km']) ) {
     if (empty($gps_koniec)) $gps_koniec = "NULL"; else $gps_koniec = "'$gps_koniec'";
     if (empty($hodnotenie)) $hodnotenie = "NULL"; else $hodnotenie = "'$hodnotenie'";
     if (empty($poznamka)) $poznamka = "NULL"; else $poznamka = "'$poznamka'";
-
     $id = $_SESSION['id'];
     if (!mysqli_query($conn, "INSERT INTO POKROKY (km,den,zcas,kcas,zgps,kgps,hodnotenie,poznamka,USER_ID,TRASA_ID) VALUES ('$km',$den,$zaciatok,$koniec,$gps_zaciatok,$gps_koniec,$hodnotenie,$poznamka,'$id','$trasa')")) {
         echo("Error description: " . mysqli_error($con));
     }
-
 }
 
+if (isset($_GET['aktivuj'])) {
+    $idtrasa = $_GET['aktivuj'];
+    $idperson = $_SESSION['id'];
+    if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=0 WHERE id_user=$idperson")) {
+        echo("Error description: " . mysqli_error($con));
+    }
 
+    if (!mysqli_query($conn, "UPDATE USER_PATH SET aktivnost=1 WHERE id_trasa=$idtrasa")) {
+        echo("Error description: " . mysqli_error($con));
+    }
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -131,7 +145,7 @@ if(isset($_POST['km']) ) {
     <!-- /Nav -->
 </header>
 <div class="container">
-<button class='main-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Pridaj Trasu</button>
+    <button class='main-btn' onclick='showLogin()' class='w3-button w3-green w3-large'>Pridaj Trasu</button>
 </div>
 <!-- Trasa Modal -->
 <div id="id01" class="w3-modal">
@@ -225,11 +239,10 @@ if(isset($_POST['km']) ) {
         <table class="table table-striped" id="myTable">
 
             <?php
-
             $koho = $_GET['id'];
             $sql = "SELECT * FROM Trasa WHERE id='$koho' ";
             $result = $conn->query($sql);
-?>
+            ?>
             <tr><td></td></tr>
 
 
@@ -249,21 +262,22 @@ if(isset($_POST['km']) ) {
 <div class="container">
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Vyhľadaj užívateľa..." title="Type in a name">
     <div id="content">
-    <table class="table table-striped" id="myTable">
-        <thead>
-        <tr>
-             <th onclick="sortTable(0)"><b>Start</b></th>
-            <th onclick="sortTable(1)"><b>Cieľ</b></th>
-            <th onclick="sortTable(2)"><b>Aktivnost</b></th>
-            <th onclick="sortTable(3)"><b>Vzdialenost</b></th>
-            <th onclick="sortTable(4)"><b>Mód</b></th>
-            <?php if($_SESSION['type'] == "admin")  echo "<th onclick='sortTable(2)'><b>Uživateľ</b></th>"; ?>
-        </tr>
-        </thead>
-        <tbody id="tab-data">
-        </tbody>
+        <table class="table table-striped" id="myTable">
+            <thead>
+            <tr>
+                <th onclick="sortTable(0)"><b>Start</b></th>
+                <th onclick="sortTable(1)"><b>Cieľ</b></th>
+                <th onclick="sortTable(2)"><b>Aktivnost</b></th>
+                <th onclick="sortTable(3)"><b>Vzdialenost</b></th>
+                <th onclick="sortTable(4)"><b>Mód</b></th>
+                <th><b>Akcia</b></th>
+                <?php if($_SESSION['type'] == "admin")  echo "<th onclick='sortTable(2)'><b>Uživateľ</b></th>"; ?>
+            </tr>
+            </thead>
+            <tbody id="tab-data">
+            </tbody>
 
-    </table>
+        </table>
     </div>
 </div>
 
@@ -330,4 +344,3 @@ if(isset($_POST['km']) ) {
 
 </>
 </html>
-

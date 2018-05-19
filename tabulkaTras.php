@@ -321,7 +321,7 @@ if (isset($_GET['aktivuj'])) {
                 <th onclick="sortTable(2)"><b>Aktivnost</b></th>
                 <th onclick="sortTable(3)"><b>Vzdialenost</b></th>
                 <th onclick="sortTable(4)"><b>Mód</b></th>
-                <th><b>Akcia</b></th>
+                 <?php if($_SESSION['type'] == "basic")  echo "<th><b>Akcia</b></th>"; ?>
                 <?php if($_SESSION['type'] == "admin")  echo "<th onclick='sortTable(2)'><b>Uživateľ</b></th>"; ?>
             </tr>
             </thead>

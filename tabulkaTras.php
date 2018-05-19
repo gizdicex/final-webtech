@@ -196,7 +196,7 @@ if (isset($_GET['aktivuj'])) {
 
                     if($_SESSION['type'] == "basic") {
 
-                       
+
 
 
                         $pocetkm = mysqli_query($conn, "SELECT SUM(km) as total from POKROKY where USER_ID='$idperson' && TRASA_id='$idtrasa'");

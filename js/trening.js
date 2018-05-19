@@ -82,3 +82,37 @@ function initMap() {
 
 }
 
+function createMap(start, end){
+    var directionsService = new google.maps.DirectionsService;
+
+    var mapOptions = {
+        center: {lat:0,lng:0},
+        zoom: 16,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+            map = new google.maps.Map(document.getElementById("formMap2"), mapOptions);
+            directionsDisplay.setMap(map);
+
+
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+
+    directionsService.route({
+        origin: start,
+        destination: end,
+        travelMode:'WALKING',
+    }, function(response, status) {
+        if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+        }
+    });
+
+
+}
+
+
+}
+
